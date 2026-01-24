@@ -1,0 +1,74 @@
+<resources>
+
+    <string name="app_name">Carro Chauffeur</string>
+
+    <string name="sign_in">Sign In</string>
+    <string name="didn_t_get_it_on_the_first_time">Didn’t Get it on the first time?</string>
+    <string name="resend_in_00_29">Resend in 00:29</string>
+    <string name="your_ride_just_a_tap_away">Your ride, just a tap away.</string>
+    <string name="get_started_by_verifying_your_phone_number">Get started by verifying your phone number.</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="we_ve_sent_a_one_time_password_otp_to_your_mobile_number">We\'ve sent a One-Time Password (OTP) to your mobile number.</string>
+    <string name="name">Name</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="submit">Submit</string>
+    <string name="choose_file">Choose File</string>
+    <string name="upload_driving_license">Upload Driving License</string>
+    <string name="basic_details">Basic Details</string>
+    <string name="phone_number">Phone number</string>
+    <string name="toll_state_tax_extra_nparking_extra_if_applicable"><![CDATA[Toll & State tax extra\nParking extra, if Applicable]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home">Home</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="update">Update</string>
+    <string name="add_new_car">Add new Car</string>
+    <string name="select_car">Select Car</string>
+    <string name="car_name">Car Name</string>
+    <string name="car_number">Car Number</string>
+    <string name="fuel_type">Fuel Type</string>
+    <string name="no_of_seats">No. of Seats</string>
+    <string name="ac_type">Ac Type</string>
+    <string name="no_of_bags">No. of Bags</string>
+    <string name="add_car">Add Car</string>
+    <string name="select_driver">Select Driver</string>
+    <string name="booking_confirmed">Booking confirmed!</string>
+    <string name="get_ready_to_serve_your_customer">Get ready to serve your customer.</string>
+    <string name="go_to_home">Go to Home</string>
+    <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit ?</string>
+    <string name="you_will_be_redirected_to_login_screen">You will be redirected to Login screen.</string>
+    <string name="yes_exit">Yes Exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="notifications">Notifications</string>
+    <string name="no_notifications">No Notifications</string>
+    <string name="we_ll_let_you_know_when_there_will_be_something_to_update_you">We’ll let you know when there will be something to update you.</string>
+    <string name="upload_car_image">Upload Car Image</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="no_new_booking">No New Booking</string>
+    <string name="accept">Accept</string>
+    <string name="complete">Complete</string>
+
+    <string name="mobile_number">Mobile Number</string>
+
+    <string name="branch">Branch</string>
+    <string name="service_type">Service Type</string>
+
+    <string name="driver_type">Driver Type</string>
+
+    <string name="price">Price</string>
+    <string name="terms_condition"><![CDATA[Terms & Condition]]></string>
+    <string name="inclusion">Inclusion</string>
+    <string name="exclusion">Exclusion</string>
+    <string name="select_car_image">Select car image</string>
+    <string name="licence_expiry_date">Licence Expiry Date</string>
+
+    <string name="driving_license_details">Driving License Details</string>
+
+    <string name="default_notification_channel_id">notification_channel</string>
+
+    <string name="no_file_chosen">No file chosen</string>
+    <string name="driving_license_image">Driving license image</string>
+
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="primary">#05A9B5</color>
+    <color name="primary_transparent">#9905A9B5</color>
+    <color name="primary_light2_trans">#4D1EB2BC</color>
+    <color name="primary_field">#E6F6F8</color>
+
+    <color name="primary_light3">#50C3CB</color>
+    <color name="primary_light6">#9BDDE1</color>
+    <color name="primary_light9">#E6F6F8</color>
+
+    <!--    <color name="secondary">#ffd700</color>-->
+
+    <color name="secondary_light3">#fffd86</color>
+
+    <color name="secondary_dark">#F0BF26</color>
+    <color name="secondary_dark1">#d19e00</color>
+
+    <color name="gray">#3F4948</color>
+    <color name="gray_light">#6F7978</color>
+    <color name="gray_light2">#AEB4B4</color>
+    <color name="gray_text">#575656</color>
+    <color name="gray_text2">#33121111</color>
+
+    <color name="green">#34A853</color>
+    <color name="red">#CC0202</color>
+    <color name="green2">#22C34E</color>
+
+
+    <!-- Grayscale & Text Colors (Used in the new design) -->
+    <color name="text_secondary">#6c757d</color> <!-- A standard, pleasant gray for labels -->
+
+    <!-- UI Element Colors (Used in the new design) -->
+    <color name="divider_color">#E9ECEF</color> <!-- A very light gray for dividers -->
+
+
+</resources>
