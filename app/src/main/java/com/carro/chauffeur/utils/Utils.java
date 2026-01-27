@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-
+    public static boolean isAdvShow=true;
     public static String getDate(long milliSeconds, String outputFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(outputFormat);
         Calendar calendar = Calendar.getInstance();

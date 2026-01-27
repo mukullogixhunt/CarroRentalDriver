@@ -20,5 +20,7 @@ public class ImagePathDecider {
     public static String getSliderImagePath(){
         return BuildConfig.BASE_IMAGE_URL+"slider/";
     }
-
+    public static String getAdvertisementPath(){
+        return BuildConfig.BASE_IMAGE_URL+"apps/";
+    }
 }

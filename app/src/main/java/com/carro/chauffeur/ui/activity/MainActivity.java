@@ -1,10 +1,19 @@
 package com.carro.chauffeur.ui.activity;
 
+import static android.view.View.GONE;
+
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +24,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
+import com.carro.chauffeur.api.ApiClient;
+import com.carro.chauffeur.api.ApiInterface;
+import com.carro.chauffeur.api.response.HomePageResponse;
+import com.carro.chauffeur.model.HomePageModel;
+import com.carro.chauffeur.utils.ImagePathDecider;
+import com.carro.chauffeur.utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.carro.chauffeur.R;
@@ -24,12 +41,20 @@ import com.carro.chauffeur.model.LoginModel;
 import com.carro.chauffeur.utils.Constant;
 import com.carro.chauffeur.utils.PreferenceUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     public static NavController bottomNavController;
     Dialog dialog;
     LoginModel loginModel = new LoginModel();
+    private List<HomePageModel> homePageList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +80,85 @@ public class MainActivity extends AppCompatActivity {
 
         initialization();
     }
+    private void getHomeImage() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<HomePageResponse> call = apiService.home_page();
+        call.enqueue(new Callback<HomePageResponse>() {
+            @Override
+            public void onResponse(Call<HomePageResponse> call, Response<HomePageResponse> response) {
+                try {
+                    if (String.valueOf(response.code()).equalsIgnoreCase(Constant.SUCCESS_RESPONSE_CODE)) {
+                        if (response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
+                            homePageList.clear();
+                            homePageList.addAll(response.body().getData());
+
+                            if (response.body().getData().get(0).getmHcAdvImgSh().equalsIgnoreCase("1") && Utils.isAdvShow) {
+                                showAdvertiseDialog(MainActivity.this, homePageList.get(0).getmHcAdvImg());
+                            }
+
+                        } else {
 
 
+                        }
+                    } else {
+
+                    }
+                } catch (Exception e) {
+//                    log_e(this.getClass().getSimpleName(), "onResponse: ", e);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<HomePageResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("Failure", t.toString());
+
+//                showError("Something went wrong");
+            }
+        });
+    }
+    public static void showAdvertiseDialog(
+            Context context,
+            String item
+    ) {
+        Utils.isAdvShow = false;
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_advertise);
+        dialog.setCancelable(false);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(
+                    new ColorDrawable(Color.TRANSPARENT)
+            );
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+
+        ImageView imgAdvertise = dialog.findViewById(R.id.imgAdvertise);
+        ImageView imgClose = dialog.findViewById(R.id.imgClose);
+
+        // Load image from m_adv_image
+        Glide.with(context)
+                .load(ImagePathDecider.getAdvertisementPath() + item)
+                .placeholder(android.R.color.darker_gray)
+                .dontTransform()
+                .override(Target.SIZE_ORIGINAL)
+                .into(imgAdvertise);
+        // Close dialog
+        imgClose.setOnClickListener(v -> dialog.dismiss());
+
+        // Optional: click on image (open web link)
+        imgAdvertise.setOnClickListener(v -> {
+
+        });
+
+        dialog.show();
+    }
 
     private void initialization() {
         NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.bottom_nav_fragment);
@@ -77,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        getHomeImage();
     }
 
     public void navigateToFragment(int id) {

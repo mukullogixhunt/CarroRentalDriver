@@ -9,6 +9,7 @@ import com.carro.chauffeur.api.response.CarTypeResponse;
 import com.carro.chauffeur.api.response.CityResponse;
 import com.carro.chauffeur.api.response.DriverListResponse;
 import com.carro.chauffeur.api.response.DriverOtpResponse;
+import com.carro.chauffeur.api.response.HomePageResponse;
 import com.carro.chauffeur.api.response.LoginResponse;
 import com.carro.chauffeur.api.response.NotificationResponse;
 import com.carro.chauffeur.api.response.RecommendedResponse;
@@ -288,7 +289,8 @@ public interface ApiInterface {
             @Field(Constant.ApiKey.BANK_GP) String bank_gp
     );
 
-
+    @POST(Constant.EndPoint.HOME_PAGE)
+    Call<HomePageResponse> home_page();
 
 
 

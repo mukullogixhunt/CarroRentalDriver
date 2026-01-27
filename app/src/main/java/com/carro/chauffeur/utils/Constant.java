@@ -150,6 +150,7 @@ public class Constant {
         String UPDATE_BANK_DETAILS = "update_bank_details";
         String UPDATE_DOC_DETAILS = "update_doc_details";
         String UPDATE_DOCUMENT = "update_document";
+        String HOME_PAGE = "home_page";
         String UPDATE_BUSINESS_DETAILS = "update_business_details";
         String RECENT_PAID_WALLET = "recent_paid_wallet";
         String CANCEL_BOOKING = "cancel_booking";
