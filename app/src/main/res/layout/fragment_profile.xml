@@ -30,17 +30,17 @@
                 app:civ_border_color="@color/primary_transparent"
                 app:civ_border_width="2dp" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_change_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                app:backgroundTint="@color/primary"
-                app:fabCustomSize="@dimen/_30sdp"
-                app:maxImageSize="@dimen/_15sdp"
-                app:srcCompat="@drawable/icn_edit"
-                app:tint="@color/white"
-                tools:ignore="ContentDescription" />
+<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                android:id="@+id/fab_change_photo"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="bottom|end"-->
+<!--                app:backgroundTint="@color/primary"-->
+<!--                app:fabCustomSize="@dimen/_30sdp"-->
+<!--                app:maxImageSize="@dimen/_15sdp"-->
+<!--                app:srcCompat="@drawable/icn_edit"-->
+<!--                app:tint="@color/white"-->
+<!--                tools:ignore="ContentDescription" />-->
 
         </FrameLayout>
 
@@ -61,14 +61,14 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp" />
 
-            <ImageButton
-                android:id="@+id/tv_edit"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/icn_edit"
-                app:tint="@color/primary"
-                tools:ignore="ContentDescription" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/tv_edit"-->
+<!--                android:layout_width="@dimen/_30sdp"-->
+<!--                android:layout_height="@dimen/_30sdp"-->
+<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--                android:src="@drawable/icn_edit"-->
+<!--                app:tint="@color/primary"-->
+<!--                tools:ignore="ContentDescription" />-->
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
@@ -118,14 +118,14 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp" />
 
-            <ImageButton
-                android:id="@+id/tv_edit_doc"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/icn_edit"
-                app:tint="@color/primary"
-                tools:ignore="ContentDescription" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/tv_edit_doc"-->
+<!--                android:layout_width="@dimen/_30sdp"-->
+<!--                android:layout_height="@dimen/_30sdp"-->
+<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--                android:src="@drawable/icn_edit"-->
+<!--                app:tint="@color/primary"-->
+<!--                tools:ignore="ContentDescription" />-->
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
