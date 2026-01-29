@@ -162,6 +162,7 @@ public class Constant {
         String GET_COUNTRY_STATE = "get_country_state";
         String SLIDER = "slider";
         String UPDATE_CAR_DOCUMENTS = "update_car_documents";
+        String CHECK_BLOCK_WITH_ID = "check_block_with_id";
 
 
 

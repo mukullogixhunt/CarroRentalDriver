@@ -18,6 +18,7 @@ import com.carro.chauffeur.api.response.StateResponse;
 import com.carro.chauffeur.api.response.WalletCountResponse;
 import com.carro.chauffeur.api.response.WalletTransResponse;
 import com.carro.chauffeur.api.response.commonResponse.BaseResponse;
+import com.carro.chauffeur.model.CheckBlockModel;
 import com.carro.chauffeur.utils.Constant;
 
 import okhttp3.MultipartBody;
@@ -142,6 +143,11 @@ public interface ApiInterface {
 
     );
 
+    @FormUrlEncoded
+    @POST(Constant.EndPoint.CHECK_BLOCK_WITH_ID)
+    Call<CheckBlockModel> check_block_with_id(
+            @Field(Constant.ApiKey.USER_ID) String user_id
+    );
 
     @Multipart
     @POST(Constant.EndPoint.INSERT_DRIVER)

@@ -20,6 +20,10 @@ import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 
+import com.carro.chauffeur.api.ApiClient;
+import com.carro.chauffeur.api.ApiInterface;
+import com.carro.chauffeur.model.CheckBlockModel;
+import com.carro.chauffeur.model.LoginModel;
 import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -33,6 +37,11 @@ import com.carro.chauffeur.databinding.ActivitySplashBinding;
 import com.carro.chauffeur.ui.common.BaseActivity;
 import com.carro.chauffeur.utils.Constant;
 import com.carro.chauffeur.utils.PreferenceUtils;
+import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SplashActivity extends BaseActivity {
 
@@ -161,22 +170,109 @@ public class SplashActivity extends BaseActivity {
         dialog.show();
     }
 
+//    private void startSplash() {
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                // Start the main activity
+//                if (PreferenceUtils.getBoolean(Constant.PreferenceConstant.IS_LOGIN, SplashActivity.this)) {
+//                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
+//                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }
+//        }, 1500);
+//    }
+
+    private void showBlockAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+        builder.setMessage("You are blocked by admin");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }).create();
+        dialog.show();
+    }
+
+
     private void startSplash() {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Start the main activity
-                if (PreferenceUtils.getBoolean(Constant.PreferenceConstant.IS_LOGIN, SplashActivity.this)) {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+        String m_identification = getPackageName();
+        String[] packageArray = m_identification.split("\\.");
+
+        /*if (!Constant.CARRO_RENTAL.equals(packageArray[packageArray.length - 1])) {
+            // cloneAlert();
+        } else*/ {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Start the main activity
+                    if (PreferenceUtils.getBoolean(Constant.PreferenceConstant.IS_LOGIN, SplashActivity.this)) {
+                        checkBlock();
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
+            }, 1500);
+        }
+    }
+
+    private void checkBlock() {
+
+        String userData = PreferenceUtils.getString(Constant.PreferenceConstant.USER_DATA, this);
+        LoginModel loginModel = new Gson().fromJson(userData, LoginModel.class);
+
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<CheckBlockModel> call = apiService.check_block_with_id(loginModel.getmDriverId());
+        call.enqueue(new Callback<CheckBlockModel>() {
+            @Override
+            public void onResponse(Call<CheckBlockModel> call, Response<CheckBlockModel> response) {
+                try {
+                    if (String.valueOf(response.code()).equalsIgnoreCase(Constant.SUCCESS_RESPONSE_CODE)) {
+
+                        if(response.body().getUser().isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            if (response.body().getUser().get(0).getmVendorStatus().equalsIgnoreCase("3")) {
+                                showBlockAlertDialog();
+
+                            } else {
+                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+
+                } catch (Exception e) {
+
+
+                }
+
             }
-        }, 1500);
+
+            @Override
+            public void onFailure(Call<CheckBlockModel> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("Failure", t.toString());
+
+//                showError("Something went wrong");
+            }
+        });
     }
 }
