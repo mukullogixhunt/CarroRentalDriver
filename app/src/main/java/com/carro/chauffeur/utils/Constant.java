@@ -44,6 +44,9 @@ public class Constant {
         String USER_ID = "user_id";
         String CAR_ID = "car_id";
         String OTP = "otp";
+        String ONLINE_OFFLINE_STATUS = "online_status";
+        String LOC_LAT = "m_driver_cur_loc_latt";
+        String LOC_LNG = "m_driver_cur_loc_long";
         String USER_NAME = "user_name";
         String USER_EMAIL = "user_email";
         String USER_GENDER = "user_gender";
@@ -121,6 +124,8 @@ public class Constant {
         String LOGIN = "login";
         String SEND_OTP = "send_otp";
         String VERIFY_OTP = "verify_otp";
+        String UPDATE_ONLINE_OFFLINE_STATUS = "update_online_status";
+        String UPDATE_CURRENT_LOC = "update_cur_location";
         String UPDATE_PROFILE = "update_profile";
         String UPDATE_BASIC_PROFILE = "update_basic_details";
         String USER_DETAILS = "user_details";

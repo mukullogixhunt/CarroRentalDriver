@@ -51,7 +51,20 @@ public interface ApiInterface {
             @Field(Constant.ApiKey.USER_ID) String user_id,
             @Field(Constant.ApiKey.OTP) String otp
     );
+    @FormUrlEncoded
+    @POST(Constant.EndPoint.UPDATE_CURRENT_LOC)
+    Call<BaseResponse> updateCurrentLocation(
+            @Field(Constant.ApiKey.USER_ID) String user_id,
+            @Field(Constant.ApiKey.LOC_LAT) String lat,
+            @Field(Constant.ApiKey.LOC_LNG) String lng
+    );
 
+    @FormUrlEncoded
+    @POST(Constant.EndPoint.UPDATE_ONLINE_OFFLINE_STATUS)
+    Call<BaseResponse> onlineOffline(
+            @Field(Constant.ApiKey.USER_ID) String user_id,
+            @Field(Constant.ApiKey.ONLINE_OFFLINE_STATUS) String status
+    );
     @FormUrlEncoded
     @POST(Constant.EndPoint.USER_DETAILS)
     Call<LoginResponse> user_details(

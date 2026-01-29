@@ -97,9 +97,11 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         startService(serviceIntent);
                     }
+                    ApiClient.getClient().create(ApiInterface.class).onlineOffline(loginModel.getmDriverId(),"1");
                 } else {
                     Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
                     stopService(serviceIntent);
+                    ApiClient.getClient().create(ApiInterface.class).onlineOffline(loginModel.getmDriverId(),"0");
                 }
             }
         });

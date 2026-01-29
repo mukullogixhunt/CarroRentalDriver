@@ -20,12 +20,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.carro.chauffeur.R;
+import com.carro.chauffeur.api.ApiClient;
+import com.carro.chauffeur.api.ApiInterface;
+import com.carro.chauffeur.model.LoginModel;
+import com.carro.chauffeur.utils.Constant;
+import com.carro.chauffeur.utils.PreferenceUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
+import com.google.gson.Gson;
 
 public class LocationService extends Service {
 
@@ -49,9 +55,10 @@ public class LocationService extends Service {
                 for (Location location : locationResult.getLocations()) {
                     double lat = location.getLatitude();
                     double lng = location.getLongitude();
+                    String userData = PreferenceUtils.getString(Constant.PreferenceConstant.USER_DATA, LocationService.this);
+                    LoginModel loginModel = new Gson().fromJson(userData, LoginModel.class);
                     new Thread(() ->{
-
-
+                        ApiClient.getClient().create(ApiInterface.class).updateCurrentLocation(loginModel.getmDriverId(),lat+"",lng+"");
                     }).start();
                 }
             }
