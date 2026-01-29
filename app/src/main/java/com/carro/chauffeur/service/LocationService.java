@@ -22,6 +22,7 @@ import androidx.core.app.NotificationCompat;
 import com.carro.chauffeur.R;
 import com.carro.chauffeur.api.ApiClient;
 import com.carro.chauffeur.api.ApiInterface;
+import com.carro.chauffeur.api.response.commonResponse.BaseResponse;
 import com.carro.chauffeur.model.LoginModel;
 import com.carro.chauffeur.utils.Constant;
 import com.carro.chauffeur.utils.PreferenceUtils;
@@ -33,14 +34,17 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.gson.Gson;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LocationService extends Service {
 
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
     private static final String CHANNEL_ID = "LocationChannel";
 
-    // ⏱️ Testing ke liye 10 Second (Baad men 5 min kar dena)
-    private static final long UPDATE_INTERVAL = 2 * 60 * 1000;
+    private static final long UPDATE_INTERVAL = 10 * 1000;
 
     @Override
     public void onCreate() {
@@ -58,7 +62,17 @@ public class LocationService extends Service {
                     String userData = PreferenceUtils.getString(Constant.PreferenceConstant.USER_DATA, LocationService.this);
                     LoginModel loginModel = new Gson().fromJson(userData, LoginModel.class);
                     new Thread(() ->{
-                        ApiClient.getClient().create(ApiInterface.class).updateCurrentLocation(loginModel.getmDriverId(),lat+"",lng+"");
+                        ApiClient.getClient().create(ApiInterface.class).updateCurrentLocation(loginModel.getmDriverId(),lat+"",lng+"").enqueue(new Callback<BaseResponse>() {
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+                            }
+                        });
                     }).start();
                 }
             }
@@ -88,7 +102,7 @@ public class LocationService extends Service {
     private void requestLocation() {
         // ✅ CHANGE: Priority High Accuracy karein (GPS use hoga)
         LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, UPDATE_INTERVAL)
-                .setMinUpdateIntervalMillis(10000) // 10 sec se jaldi update na kare
+                .setMinUpdateIntervalMillis(5000) // 10 sec se jaldi update na kare
                 .setWaitForAccurateLocation(false)
                 .build();
 

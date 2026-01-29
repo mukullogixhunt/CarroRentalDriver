@@ -30,6 +30,7 @@ import com.carro.chauffeur.api.ApiClient;
 import com.carro.chauffeur.api.ApiInterface;
 import com.carro.chauffeur.api.response.HomePageResponse;
 import com.carro.chauffeur.api.response.LoginResponse;
+import com.carro.chauffeur.api.response.commonResponse.BaseResponse;
 import com.carro.chauffeur.databinding.ActivityMainBinding;
 import com.carro.chauffeur.databinding.LogoutBottomDialogBinding;
 import com.carro.chauffeur.model.HomePageModel;
@@ -81,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
                         hasNotif = checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == android.content.pm.PackageManager.PERMISSION_GRANTED;
                     }
-
                     if (!hasLocation || !hasNotif) {
-                        // Permissions Maangein
                         requestPermissions(new String[]{
                                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -91,17 +90,9 @@ public class MainActivity extends AppCompatActivity {
                         }, 100);
                         return;
                     }
-                    Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        startForegroundService(serviceIntent);
-                    } else {
-                        startService(serviceIntent);
-                    }
-                    ApiClient.getClient().create(ApiInterface.class).onlineOffline(loginModel.getmDriverId(),"1");
+                    setStatusOnline();
                 } else {
-                    Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
-                    stopService(serviceIntent);
-                    ApiClient.getClient().create(ApiInterface.class).onlineOffline(loginModel.getmDriverId(),"0");
+                    setStatusOffline();
                 }
             }
         });
@@ -114,9 +105,12 @@ public class MainActivity extends AppCompatActivity {
         userDetailsApi();
         initialization();
     }
+
     private void userDetailsApi() {
+        String userData = PreferenceUtils.getString(Constant.PreferenceConstant.USER_DATA, MainActivity.this);
+        LoginModel uData = new Gson().fromJson(userData, LoginModel.class);
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<LoginResponse> call = apiInterface.user_details(loginModel.getmDriverId());
+        Call<LoginResponse> call = apiInterface.user_details(uData.getmDriverId());
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
@@ -125,7 +119,12 @@ public class MainActivity extends AppCompatActivity {
                         loginModel = response.body().getData().get(0);
                         PreferenceUtils.setString(Constant.PreferenceConstant.USER_DATA,
                                 new Gson().toJson(loginModel), MainActivity.this);
-                        binding.statusToggle.setOn(loginModel.getmDriverIsOnline().equals("1"));
+                        boolean isOnline = loginModel.getmDriverIsOnline().equals("1");
+                        if (isOnline) {
+                            binding.statusToggle.setOn(true);
+                            setStatusOnline();
+                        }
+
                     } else {
                         showError(response.message());
                     }
@@ -140,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getHomeImage() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<HomePageResponse> call = apiService.home_page();
@@ -259,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
         if (msg == null) return;
         Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG).show();
     }
+
     private void logoutBottomDialog() {
         LogoutBottomDialogBinding logoutBottomDialogBinding;
         logoutBottomDialogBinding = LogoutBottomDialogBinding.inflate(getLayoutInflater());
@@ -294,5 +295,46 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    private void setStatusOnline() {
+        Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
+        new Thread(() -> {
+            ApiClient.getClient().create(ApiInterface.class).onlineOffline(loginModel.getmDriverId(), "1").enqueue(new Callback<BaseResponse>() {
+                @Override
+                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+                }
+            });
+        }).start();
+    }
+
+    private void setStatusOffline(){
+        Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
+        stopService(serviceIntent);
+        new Thread(() -> {
+            ApiClient.getClient().create(ApiInterface.class).onlineOffline(loginModel.getmDriverId(), "0").enqueue(new Callback<BaseResponse>() {
+                @Override
+                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+                }
+            });
+        }).start();
     }
 }
