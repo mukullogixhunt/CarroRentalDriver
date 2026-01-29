@@ -106,23 +106,11 @@
         <meta-data
             android:name="com.razorpay.plugin.googlepay_all"
             android:value="com.razorpay.RzpGpayMerged" />
-
-
-        <service
-            android:name=".firebase.MyFirebaseInstanceIdService"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="TODO">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
         <service
             android:name=".firebase.MyFirebaseMessagingService"
             android:directBootAware="true"
             android:enabled="true"
-            android:exported="false"
-            android:permission="TODO">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.measurement.UPLOAD" />
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
