@@ -2,6 +2,7 @@ package com.carro.chauffeur.ui.fragment.bookings;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.carro.chauffeur.ui.activity.BookingDetailsActivity;
+import com.carro.chauffeur.utils.Utils;
 import com.google.gson.Gson;
 import com.carro.chauffeur.R;
 import com.carro.chauffeur.api.ApiClient;
@@ -151,6 +154,23 @@ public class BookingHistoryFragment extends BaseFragment implements BookingClick
                 }
             }
         });
+    }
+
+    @Override
+    public void onCallClick(BookingListModel bookingListModel) {
+        booking_id = bookingListModel.getmBkingId();
+    }
+
+    @Override
+    public void onSeeDetailsClick(BookingListModel bookingListModel) {
+        booking_id = bookingListModel.getmBkingId();
+        Intent intent = new Intent(requireActivity(), BookingDetailsActivity.class);
+        intent.putExtra("BOOKING_ID", booking_id);
+        startActivity(intent);
+    }
+    @Override
+    public void onMsgClick(BookingListModel bookingListModel) {
+        booking_id = bookingListModel.getmBkingId();
     }
 
     private void bookingSuccessDialog() {

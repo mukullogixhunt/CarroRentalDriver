@@ -7,17 +7,12 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Location (foreground only, Play Store safe) -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- Location (foreground only, Play Store safe) -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Foreground service -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Foreground service -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission
@@ -35,9 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarroRentalDriver"
         tools:targetApi="31">
-
-
-
+        <activity
+            android:name=".ui.activity.BookingDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activity.NotificationActivity"
             android:exported="false" />
@@ -49,18 +44,12 @@
             android:name=".ui.activity.EditProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-
-
-
         <activity
             android:name=".ui.activity.OtpActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="false" />
-
-
-
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="false" />
@@ -78,7 +67,6 @@
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
         <activity
             android:name=".ui.activity.SplashActivity"
             android:exported="true">
@@ -113,6 +101,7 @@
         <meta-data
             android:name="com.razorpay.plugin.googlepay_all"
             android:value="com.razorpay.RzpGpayMerged" />
+
         <service
             android:name=".service.LocationService"
             android:enabled="true"
@@ -137,7 +126,6 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.carro.chauffeur.ui.fragment.bookings;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.carro.chauffeur.ui.activity.BookingDetailsActivity;
+import com.carro.chauffeur.utils.Utils;
 import com.google.gson.Gson;
 import com.carro.chauffeur.api.ApiClient;
 import com.carro.chauffeur.api.ApiInterface;
@@ -179,6 +182,25 @@ public class ActiveBookingsFragment extends BaseFragment implements BookingClick
             cancelBookingAPi();
 
         }
+    }
+
+    @Override
+    public void onCallClick(BookingListModel bookingListModel) {
+        booking_id = bookingListModel.getmBkingId();
+        Utils.openDialer(requireActivity(),bookingListModel.getmCustMobile());
+    }
+
+    @Override
+    public void onSeeDetailsClick(BookingListModel bookingListModel) {
+        booking_id = bookingListModel.getmBkingId();
+        Intent intent = new Intent(requireActivity(), BookingDetailsActivity.class);
+        intent.putExtra("BOOKING_ID", booking_id);
+        startActivity(intent);
+    }
+    @Override
+    public void onMsgClick(BookingListModel bookingListModel) {
+        booking_id = bookingListModel.getmBkingId();
+        Utils.openSms(requireActivity(),bookingListModel.getmCustMobile(),"Hi, "+bookingListModel.getmCustName());
     }
 
     private void cancelBookingAPi() {

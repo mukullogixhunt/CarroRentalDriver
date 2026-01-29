@@ -363,6 +363,20 @@
                             android:textSize="@dimen/_11ssp" />
                     </LinearLayout>
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/tvSeeDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/see_details"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:background="@drawable/rzp_secured_by_bg"
+                    android:backgroundTint="@color/white"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -382,63 +396,5 @@
         app:cornerRadius="@dimen/_7sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
-    <LinearLayout
-        android:id="@+id/llButtons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/cl"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_accept"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginVertical="@dimen/_3sdp"
-            android:backgroundTint="@color/secondary_dark1"
-            android:paddingVertical="@dimen/_5sdp"
-            android:text="@string/accept"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            android:textStyle="bold"
-            app:cornerRadius="@dimen/_10sdp" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginVertical="@dimen/_3sdp"
-            android:backgroundTint="@color/red"
-            android:paddingVertical="@dimen/_5sdp"
-            android:text="@string/cancel"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            android:textStyle="bold"
-            app:cornerRadius="@dimen/_10sdp" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_complete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginVertical="@dimen/_3sdp"
-            android:backgroundTint="@color/green"
-            android:paddingVertical="@dimen/_5sdp"
-            android:text="@string/complete"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            android:textStyle="bold"
-            app:cornerRadius="@dimen/_10sdp" />
-    </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

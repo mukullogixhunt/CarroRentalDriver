@@ -67,13 +67,6 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         }
 
 
-        if(isHistory){
-            holder.binding.llButtons.setVisibility(View.GONE);
-        }else{
-            holder.binding.llButtons.setVisibility(View.VISIBLE);
-
-        }
-
         Glide.with(context)
                 .load(ImagePathDecider.getCarImagePath() + item.getmCtypeImg())
                 .error(R.drawable.img_no_profile)
@@ -98,17 +91,58 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         drop_time = Utils.formatTimeString(Constant.HHMMSS, Constant.HHMMSSA, item.getmBkingReturnAt());
         holder.binding.tvToDate.setText(drop_date + " " + drop_time);
 
-        if (item.getmBkingStatus().equals("1")) {
-            holder.binding.btnAccept.setVisibility(View.VISIBLE);
-            holder.binding.btnComplete.setVisibility(View.GONE);
-            holder.binding.btnStatus.setText("Pending");
-            holder.binding.btnStatus.setBackgroundColor(ContextCompat.getColor(context, R.color.secondary_dark));
-        } else {
-            holder.binding.btnAccept.setVisibility(View.GONE);
-            holder.binding.btnComplete.setVisibility(View.VISIBLE);
-            holder.binding.btnStatus.setText("Accepted");
-            holder.binding.btnStatus.setBackgroundColor(ContextCompat.getColor(context, R.color.green2));
+        switch (item.getmBkingStatus()) {
+
+            case "1": // Pending
+                holder.binding.btnStatus.setText("Pending");
+                holder.binding.btnStatus.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.secondary_dark)
+                );
+                break;
+
+            case "2": // Accepted
+                holder.binding.btnStatus.setText("Accepted");
+                holder.binding.btnStatus.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.green2)
+                );
+                break;
+
+            case "5": // Reached Pickup Location
+                holder.binding.btnStatus.setText("Reached Pickup");
+                holder.binding.btnStatus.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.primary_transparent)
+                );
+                break;
+
+            case "6": // Reached Destination
+                holder.binding.btnStatus.setText("Reached Destination");
+                holder.binding.btnStatus.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.secondary_dark)
+                );
+                break;
+
+            case "3": // Completed
+                holder.binding.btnStatus.setText("Completed");
+                holder.binding.btnStatus.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.green)
+                );
+                break;
+
+            case "4": // Cancelled
+                holder.binding.btnStatus.setText("Cancelled");
+                holder.binding.btnStatus.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.red)
+                );
+                break;
+
+            default:
+                holder.binding.btnStatus.setText("Unknown");
+                holder.binding.btnStatus.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.gray)
+                );
+                break;
         }
+
 
         switch (item.getmBkingType()) {
             case "1":
@@ -153,22 +187,20 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         }
 
 
-        holder.binding.btnAccept.setOnClickListener(new View.OnClickListener() {
+        holder.binding.tvSeeDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bookingClickListener.onBookingClick(item,"accept");
+                bookingClickListener.onSeeDetailsClick(item);
             }
         });
-        holder.binding.btnCancel.setOnClickListener(new View.OnClickListener() {
+        holder.binding.ivCall.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                bookingClickListener.onBookingClick(item,"cancel");
-            }
+            public void onClick(View v) {bookingClickListener.onCallClick(item);}
         });
-        holder.binding.btnComplete.setOnClickListener(new View.OnClickListener() {
+        holder.binding.ivMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bookingClickListener.onBookingClick(item,"complete");
+                bookingClickListener.onMsgClick(item);
             }
         });
     }

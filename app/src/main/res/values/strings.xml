@@ -72,5 +72,7 @@
     <string name="driving_license_image">Driving license image</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>
+    <string name="see_details">See Details</string>
+    <string name="booking_details">Booking Details</string>
 
 </resources>

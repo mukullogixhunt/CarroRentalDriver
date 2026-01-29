@@ -42,6 +42,7 @@ public class Constant {
         String USER_MOBILE = "user_mobile";
         String USER_ALT_MOBILE = "user_alt_mobile";
         String USER_ID = "user_id";
+        String BOOKING_ID = "bking_id";
         String CAR_ID = "car_id";
         String OTP = "otp";
         String ONLINE_OFFLINE_STATUS = "online_status";
@@ -98,6 +99,7 @@ public class Constant {
         String DRIVER_IMAGE = "driver_img";
         String LIC_IMAGE = "lic_img";
         String BKING_ID = "bking_id";
+        String BKING_STATUS = "bking_status";
         String AMOUNT = "amount";
         String BANK_HOLDER_NAME = "bank_holder_name";
         String BANK_NAME = "bank_name";
@@ -168,6 +170,7 @@ public class Constant {
         String SLIDER = "slider";
         String UPDATE_CAR_DOCUMENTS = "update_car_documents";
         String CHECK_BLOCK_WITH_ID = "check_block_with_id";
+        String BOOKING_DETAILS = "booking_details";
 
 
 

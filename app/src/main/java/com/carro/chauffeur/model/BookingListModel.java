@@ -318,7 +318,55 @@ public class BookingListModel {
     @Expose
     private String mCarUpdatedon;
 
+    @SerializedName("m_driver_cur_loc_latt")
+    @Expose
+    private String mDriverCurLocLat;
+
+    @SerializedName("m_driver_cur_loc_long")
+    @Expose
+    private String mDriverCurLocLng;
+
+    @SerializedName("m_cust_cur_loc_latt")
+    @Expose
+    private String mCustCurLocLat;
+
+    @SerializedName("m_cust_cur_loc_long")
+    @Expose
+    private String mCustCurLocLng;
+
     // --- GETTERS AND SETTERS FOR ALL FIELDS ---
+
+    public String getmDriverCurLocLat() {
+        return mDriverCurLocLat;
+    }
+
+    public void setmDriverCurLocLat(String mDriverCurLocLat) {
+        this.mDriverCurLocLat = mDriverCurLocLat;
+    }
+
+    public String getmDriverCurLocLng() {
+        return mDriverCurLocLng;
+    }
+
+    public void setmDriverCurLocLng(String mDriverCurLocLng) {
+        this.mDriverCurLocLng = mDriverCurLocLng;
+    }
+
+    public String getmCustCurLocLat() {
+        return mCustCurLocLat;
+    }
+
+    public void setmCustCurLocLat(String mCustCurLocLat) {
+        this.mCustCurLocLat = mCustCurLocLat;
+    }
+
+    public String getmCustCurLocLng() {
+        return mCustCurLocLng;
+    }
+
+    public void setmCustCurLocLng(String mCustCurLocLng) {
+        this.mCustCurLocLng = mCustCurLocLng;
+    }
 
     public String getmBkingId() {
         return mBkingId;

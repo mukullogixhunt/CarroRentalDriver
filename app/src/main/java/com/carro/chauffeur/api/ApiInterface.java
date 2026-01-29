@@ -1,5 +1,6 @@
 package com.carro.chauffeur.api;
 
+import com.carro.chauffeur.api.response.BookingDetailResponse;
 import com.carro.chauffeur.api.response.BookingListResponse;
 import com.carro.chauffeur.api.response.BranchResponse;
 import com.carro.chauffeur.api.response.CarBrandResponse;
@@ -199,6 +200,11 @@ public interface ApiInterface {
     Call<NotificationResponse> notification(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
+    @FormUrlEncoded
+    @POST(Constant.EndPoint.BOOKING_DETAILS)
+    Call<BookingDetailResponse> getBookingDetails(
+            @Field(Constant.ApiKey.BOOKING_ID) String booking_id
+    );
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_NOTIFY_BOOKING)
@@ -281,6 +287,20 @@ public interface ApiInterface {
     Call<BaseResponse>cancel_booking(
             @Field(Constant.ApiKey.BKING_ID) String bking_id
     );
+
+    @FormUrlEncoded
+    @POST(Constant.EndPoint.UPDATE_COMPLETE_BOOKING)
+    Call<BaseResponse>reachedPickupLocation(
+            @Field(Constant.ApiKey.BKING_ID) String bking_id,
+            @Field(Constant.ApiKey.BKING_STATUS) String bking_status
+    );
+
+    @FormUrlEncoded
+    @POST(Constant.EndPoint.UPDATE_COMPLETE_BOOKING)
+    Call<BaseResponse>reachedDropLocation(
+            @Field(Constant.ApiKey.BKING_ID) String bking_id,
+            @Field(Constant.ApiKey.BKING_STATUS) String bking_status
+            );
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_COMPLETE_BOOKING)
