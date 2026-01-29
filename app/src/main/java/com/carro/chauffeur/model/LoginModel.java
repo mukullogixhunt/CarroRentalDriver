@@ -65,6 +65,17 @@ public class LoginModel {
     @Expose
     private String mDriverUpdatedon;
 
+    @SerializedName("m_driver_isonline")
+    @Expose
+    private String mDriverIsOnline;
+
+    public String getmDriverIsOnline() {
+        return mDriverIsOnline;
+    }
+
+    public void setmDriverIsOnline(String mDriverIsOnline) {
+        this.mDriverIsOnline = mDriverIsOnline;
+    }
 
     public String getmDriverId() {
         return mDriverId;

@@ -70,5 +70,7 @@
 
     <string name="no_file_chosen">No file chosen</string>
     <string name="driving_license_image">Driving license image</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
 
 </resources>

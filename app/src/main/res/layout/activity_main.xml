@@ -14,7 +14,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -33,13 +32,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.github.angads25.toggle.widget.LabeledSwitch
+            android:id="@+id/status_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textSize="14sp"
+            app:colorBorder="@color/primary"
+            app:colorOn="@color/primary"
+            app:textOn="@string/online"
+            app:textOff="@string/offline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_nofification"
+            app:layout_constraintTop_toTopOf="parent"
+            app:on="false" />
         <ImageView
             android:id="@+id/iv_nofification"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:src="@drawable/ic_notification"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_logout"
             app:layout_constraintTop_toTopOf="parent" />

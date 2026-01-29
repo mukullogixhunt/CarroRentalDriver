@@ -1,7 +1,5 @@
 package com.carro.chauffeur.ui.activity;
 
-import static android.view.View.GONE;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,20 +25,25 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.carro.chauffeur.R;
 import com.carro.chauffeur.api.ApiClient;
 import com.carro.chauffeur.api.ApiInterface;
 import com.carro.chauffeur.api.response.HomePageResponse;
-import com.carro.chauffeur.model.HomePageModel;
-import com.carro.chauffeur.utils.ImagePathDecider;
-import com.carro.chauffeur.utils.Utils;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.gson.Gson;
-import com.carro.chauffeur.R;
+import com.carro.chauffeur.api.response.LoginResponse;
 import com.carro.chauffeur.databinding.ActivityMainBinding;
 import com.carro.chauffeur.databinding.LogoutBottomDialogBinding;
+import com.carro.chauffeur.model.HomePageModel;
 import com.carro.chauffeur.model.LoginModel;
+import com.carro.chauffeur.service.LocationService;
 import com.carro.chauffeur.utils.Constant;
+import com.carro.chauffeur.utils.ImagePathDecider;
 import com.carro.chauffeur.utils.PreferenceUtils;
+import com.carro.chauffeur.utils.Utils;
+import com.github.angads25.toggle.interfaces.OnToggledListener;
+import com.github.angads25.toggle.model.ToggleableView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,18 +71,72 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
         });
+        binding.statusToggle.setOnToggledListener(new OnToggledListener() {
+            @Override
+            public void onSwitched(ToggleableView toggleableView, boolean isOn) {
+
+                if (isOn) {
+                    boolean hasLocation = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED;
+                    boolean hasNotif = true;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                        hasNotif = checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == android.content.pm.PackageManager.PERMISSION_GRANTED;
+                    }
+
+                    if (!hasLocation || !hasNotif) {
+                        // Permissions Maangein
+                        requestPermissions(new String[]{
+                                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                                android.Manifest.permission.POST_NOTIFICATIONS
+                        }, 100);
+                        return;
+                    }
+                    Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        startForegroundService(serviceIntent);
+                    } else {
+                        startService(serviceIntent);
+                    }
+                } else {
+                    Intent serviceIntent = new Intent(getApplicationContext(), LocationService.class);
+                    stopService(serviceIntent);
+                }
+            }
+        });
 
         getUserPreferences();
 
     }
 
     private void getUserPreferences() {
-
-        String userData = PreferenceUtils.getString(Constant.PreferenceConstant.USER_DATA, MainActivity.this);
-        loginModel = new Gson().fromJson(userData, LoginModel.class);
-
-
+        userDetailsApi();
         initialization();
+    }
+    private void userDetailsApi() {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<LoginResponse> call = apiInterface.user_details(loginModel.getmDriverId());
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+                try {
+                    if (response.isSuccessful() && response.body() != null && response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
+                        loginModel = response.body().getData().get(0);
+                        PreferenceUtils.setString(Constant.PreferenceConstant.USER_DATA,
+                                new Gson().toJson(loginModel), MainActivity.this);
+                        binding.statusToggle.setOn(loginModel.getmDriverIsOnline().equals("1"));
+                    } else {
+                        showError(response.message());
+                    }
+                } catch (Exception e) {
+                    showError("An error occurred.");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+                showError("Something went wrong");
+            }
+        });
     }
     private void getHomeImage() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -119,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public static void showAdvertiseDialog(
             Context context,
             String item
@@ -175,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         binding.ivNofification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,NotificationActivity.class);
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
             }
         });
@@ -194,7 +253,10 @@ public class MainActivity extends AppCompatActivity {
         bottomNavController.popBackStack(fragmentCard, true);
     }
 
-
+    public void showError(String msg) {
+        if (msg == null) return;
+        Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG).show();
+    }
     private void logoutBottomDialog() {
         LogoutBottomDialogBinding logoutBottomDialogBinding;
         logoutBottomDialogBinding = LogoutBottomDialogBinding.inflate(getLayoutInflater());
@@ -222,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 dialog.dismiss();
                 PreferenceUtils.setBoolean(Constant.PreferenceConstant.IS_LOGIN, false, MainActivity.this);
-                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
 
