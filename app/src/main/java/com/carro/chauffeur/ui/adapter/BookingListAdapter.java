@@ -47,9 +47,19 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BookingListModel item = items.get(holder.getAdapterPosition());
+        if(item.getmBkingFrom().isEmpty()){
+            holder.binding.tvFromLocation.setText("---");
+        }else{
+            holder.binding.tvFromLocation.setText(item.getmBkingFrom());
+        }
 
-        holder.binding.tvFromLocation.setText(item.getmBkingPickupAddress());
-        holder.binding.tvToLocation.setText(item.getmBkingDropAddress());
+        if(item.getmBkingTo().isEmpty()){
+            holder.binding.tvToLocation.setText("---");
+        }else{
+            holder.binding.tvToLocation.setText(item.getmBkingTo());
+        }
+
+
         if (item.getmBkingType().equals("4")){
             holder.binding.tvCarType.setText(item.getmBusTitle()+" \n( Bus )");
         }else {
@@ -70,7 +80,9 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                 .into(holder.binding.ivCarImage);
 
 
-        holder.binding.tvPickupDetails.setText("Pickup : " + item.getmBkingPickupAddress());
+        holder.binding.tvCustomerName.setText(item.getmCustName());
+        holder.binding.tvBookingId.setText("Booking Id : " + item.getmBkingId());
+        holder.binding.tvPickupDetails.setText("Pickup : " + item.getmBkingFrom());
         holder.binding.tvAmount.setText(new IndianCurrencyFormat().inCuFormatText(item.getmBkingTotal()));
 
         String pick_date;
@@ -104,19 +116,15 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                     switch (item.getmBkingRoadType()) {
                         case "1":
                             holder.binding.tvTripType.setText("One Way Trip");
-                            holder.binding.ivTripType.setImageResource(R.drawable.icn_one_way);
                             break;
                         case "2":
                             holder.binding.tvTripType.setText("Round Trip");
-                            holder.binding.ivTripType.setImageResource(R.drawable.ic_round_trip);
                             break;
                         case "3":
                             holder.binding.tvTripType.setText("Hourly Trip");
-                            holder.binding.ivTripType.setImageResource(R.drawable.ic_round_trip);
                             break;
                         case "4":
                             holder.binding.tvTripType.setText("Airport");
-                            holder.binding.ivTripType.setImageResource(R.drawable.ic_round_trip);
                             break;
                     }
                 }

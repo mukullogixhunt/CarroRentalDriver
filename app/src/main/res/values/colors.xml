@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
 
+
     <color name="primary">#05A9B5</color>
     <color name="primary_transparent">#9905A9B5</color>
     <color name="primary_light2_trans">#4D1EB2BC</color>
@@ -24,6 +25,7 @@
     <color name="gray_light">#6F7978</color>
     <color name="gray_light2">#AEB4B4</color>
     <color name="gray_text">#575656</color>
+    <color name="gray_dark">#2B3231</color>
     <color name="gray_text2">#33121111</color>
 
     <color name="green">#34A853</color>

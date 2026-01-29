@@ -248,7 +248,7 @@ public class SplashActivity extends BaseActivity {
                             startActivity(intent);
                             finish();
                         }else {
-                            if (response.body().getUser().get(0).getmVendorStatus().equalsIgnoreCase("3")) {
+                            if (response.body().getUser().get(0).getmDriverStatus().equalsIgnoreCase("3")) {
                                 showBlockAlertDialog();
 
                             } else {

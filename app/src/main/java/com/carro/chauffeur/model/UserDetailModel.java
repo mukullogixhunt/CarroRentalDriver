@@ -6,466 +6,466 @@ import com.google.gson.annotations.SerializedName;
 public class UserDetailModel {
 
 
-    @SerializedName("m_vendor_id")
+    @SerializedName("m_driver_id")
     @Expose
-    private String mVendorId;
-    @SerializedName("m_vendor_name")
+    private String mDriverId;
+    @SerializedName("m_driver_name")
     @Expose
-    private String mVendorName;
-    @SerializedName("m_vendor_mobile")
+    private String mDriverName;
+    @SerializedName("m_driver_mobile")
     @Expose
-    private String mVendorMobile;
-    @SerializedName("m_vendor_alt_mobile")
+    private String mDriverMobile;
+    @SerializedName("m_driver_alt_mobile")
     @Expose
-    private String mVendorAltMobile;
-    @SerializedName("m_vendor_email")
+    private String mDriverAltMobile;
+    @SerializedName("m_driver_email")
     @Expose
-    private String mVendorEmail;
-    @SerializedName("m_vendor_gender")
+    private String mDriverEmail;
+    @SerializedName("m_driver_gender")
     @Expose
-    private String mVendorGender;
-    @SerializedName("m_vendor_dob")
+    private String mDriverGender;
+    @SerializedName("m_driver_dob")
     @Expose
-    private String mVendorDob;
-    @SerializedName("m_vendor_img")
+    private String mDriverDob;
+    @SerializedName("m_driver_img")
     @Expose
-    private String mVendorImg;
-    @SerializedName("m_vendor_otp")
+    private String mDriverImg;
+    @SerializedName("m_driver_otp")
     @Expose
-    private String mVendorOtp;
-    @SerializedName("m_vendor_adhar_no")
+    private String mDriverOtp;
+    @SerializedName("m_driver_adhar_no")
     @Expose
-    private String mVendorAdharNo;
-    @SerializedName("m_vendor_adhar_front")
+    private String mDriverAdharNo;
+    @SerializedName("m_driver_adhar_front")
     @Expose
-    private String mVendorAdharFront;
-    @SerializedName("m_vendor_adhar_back")
+    private String mDriverAdharFront;
+    @SerializedName("m_driver_adhar_back")
     @Expose
-    private String mVendorAdharBack;
-    @SerializedName("m_vendor_lic_no")
+    private String mDriverAdharBack;
+    @SerializedName("m_driver_lic_no")
     @Expose
-    private String mVendorLicNo;
-    @SerializedName("m_vendor_lic_img")
+    private String mDriverLicNo;
+    @SerializedName("m_driver_lic_img")
     @Expose
-    private String mVendorLicImg;
-    @SerializedName("m_vendor_pan_no")
+    private String mDriverLicImg;
+    @SerializedName("m_driver_pan_no")
     @Expose
-    private String mVendorPanNo;
-    @SerializedName("m_vendor_pan_img")
+    private String mDriverPanNo;
+    @SerializedName("m_driver_pan_img")
     @Expose
-    private String mVendorPanImg;
-    @SerializedName("m_vendor_vehicle_type")
+    private String mDriverPanImg;
+    @SerializedName("m_driver_vehicle_type")
     @Expose
-    private String mVendorVehicleType;
-    @SerializedName("m_vendor_vehicle_reg_no")
+    private String mDriverVehicleType;
+    @SerializedName("m_driver_vehicle_reg_no")
     @Expose
-    private String mVendorVehicleRegNo;
-    @SerializedName("m_vendor_state")
+    private String mDriverVehicleRegNo;
+    @SerializedName("m_driver_state")
     @Expose
-    private String mVendorState;
-    @SerializedName("m_vendor_city")
+    private String mDriverState;
+    @SerializedName("m_driver_city")
     @Expose
-    private String mVendorCity;
-    @SerializedName("m_vendor_address")
+    private String mDriverCity;
+    @SerializedName("m_driver_address")
     @Expose
-    private String mVendorAddress;
-    @SerializedName("m_vendor_pincode")
+    private String mDriverAddress;
+    @SerializedName("m_driver_pincode")
     @Expose
-    private String mVendorPincode;
-    @SerializedName("m_vendor_branch")
+    private String mDriverPincode;
+    @SerializedName("m_driver_branch")
     @Expose
-    private String mVendorBranch;
-    @SerializedName("m_vendor_business_name")
+    private String mDriverBranch;
+    @SerializedName("m_driver_business_name")
     @Expose
-    private String mVendorBusinessName;
-    @SerializedName("m_vendor_business_address")
+    private String mDriverBusinessName;
+    @SerializedName("m_driver_business_address")
     @Expose
-    private String mVendorBusinessAddress;
-    @SerializedName("m_vendor_business_email")
+    private String mDriverBusinessAddress;
+    @SerializedName("m_driver_business_email")
     @Expose
-    private String mVendorBusinessEmail;
-    @SerializedName("m_vendor_business_phone")
+    private String mDriverBusinessEmail;
+    @SerializedName("m_driver_business_phone")
     @Expose
-    private String mVendorBusinessPhone;
-    @SerializedName("m_vendor_business_lic_no")
+    private String mDriverBusinessPhone;
+    @SerializedName("m_driver_business_lic_no")
     @Expose
-    private String mVendorBusinessLicNo;
-    @SerializedName("m_vendor_business_lic_img_front")
+    private String mDriverBusinessLicNo;
+    @SerializedName("m_driver_business_lic_img_front")
     @Expose
-    private String mVendorBusinessLicImgFront;
-    @SerializedName("m_vendor_business_lic_img_back")
+    private String mDriverBusinessLicImgFront;
+    @SerializedName("m_driver_business_lic_img_back")
     @Expose
-    private String mVendorBusinessLicImgBack;
-    @SerializedName("m_vendor_bank_holder_name")
+    private String mDriverBusinessLicImgBack;
+    @SerializedName("m_driver_bank_holder_name")
     @Expose
-    private String mVendorBankHolderName;
-    @SerializedName("m_vendor_bank_name")
+    private String mDriverBankHolderName;
+    @SerializedName("m_driver_bank_name")
     @Expose
-    private String mVendorBankName;
-    @SerializedName("m_vendor_bank_acc_no")
+    private String mDriverBankName;
+    @SerializedName("m_driver_bank_acc_no")
     @Expose
-    private String mVendorBankAccNo;
-    @SerializedName("m_vendor_bank_ifsc_code")
+    private String mDriverBankAccNo;
+    @SerializedName("m_driver_bank_ifsc_code")
     @Expose
-    private String mVendorBankIfscCode;
-    @SerializedName("m_vendor_bank_psbk_img")
+    private String mDriverBankIfscCode;
+    @SerializedName("m_driver_bank_psbk_img")
     @Expose
-    private String mVendorBankPsbkImg;
-    @SerializedName("m_vendor_bank_upi")
+    private String mDriverBankPsbkImg;
+    @SerializedName("m_driver_bank_upi")
     @Expose
-    private String mVendorBankUpi;
-    @SerializedName("m_vendor_bank_pp")
+    private String mDriverBankUpi;
+    @SerializedName("m_driver_bank_pp")
     @Expose
-    private String mVendorBankPp;
-    @SerializedName("m_vendor_bank_gp")
+    private String mDriverBankPp;
+    @SerializedName("m_driver_bank_gp")
     @Expose
-    private String mVendorBankGp;
-    @SerializedName("m_vendor_status")
+    private String mDriverBankGp;
+    @SerializedName("m_driver_status")
     @Expose
-    private String mVendorStatus;
-    @SerializedName("m_vendor_fcmtoken")
+    private String mDriverStatus;
+    @SerializedName("m_driver_fcmtoken")
     @Expose
-    private String mVendorFcmtoken;
-    @SerializedName("m_vendor_addedon")
+    private String mDriverFcmtoken;
+    @SerializedName("m_driver_addedon")
     @Expose
-    private String mVendorAddedon;
-    @SerializedName("m_vendor_updatedon")
+    private String mDriverAddedon;
+    @SerializedName("m_driver_updatedon")
     @Expose
-    private String mVendorUpdatedon;
+    private String mDriverUpdatedon;
 
-    public String getmVendorId() {
-        return mVendorId;
+    public String getmDriverId() {
+        return mDriverId;
     }
 
-    public void setmVendorId(String mVendorId) {
-        this.mVendorId = mVendorId;
+    public void setmDriverId(String mDriverId) {
+        this.mDriverId = mDriverId;
     }
 
-    public String getmVendorName() {
-        return mVendorName;
+    public String getmDriverName() {
+        return mDriverName;
     }
 
-    public void setmVendorName(String mVendorName) {
-        this.mVendorName = mVendorName;
+    public void setmDriverName(String mDriverName) {
+        this.mDriverName = mDriverName;
     }
 
-    public String getmVendorMobile() {
-        return mVendorMobile;
+    public String getmDriverMobile() {
+        return mDriverMobile;
     }
 
-    public void setmVendorMobile(String mVendorMobile) {
-        this.mVendorMobile = mVendorMobile;
+    public void setmDriverMobile(String mDriverMobile) {
+        this.mDriverMobile = mDriverMobile;
     }
 
-    public String getmVendorAltMobile() {
-        return mVendorAltMobile;
+    public String getmDriverAltMobile() {
+        return mDriverAltMobile;
     }
 
-    public void setmVendorAltMobile(String mVendorAltMobile) {
-        this.mVendorAltMobile = mVendorAltMobile;
+    public void setmDriverAltMobile(String mDriverAltMobile) {
+        this.mDriverAltMobile = mDriverAltMobile;
     }
 
-    public String getmVendorEmail() {
-        return mVendorEmail;
+    public String getmDriverEmail() {
+        return mDriverEmail;
     }
 
-    public void setmVendorEmail(String mVendorEmail) {
-        this.mVendorEmail = mVendorEmail;
+    public void setmDriverEmail(String mDriverEmail) {
+        this.mDriverEmail = mDriverEmail;
     }
 
-    public String getmVendorGender() {
-        return mVendorGender;
+    public String getmDriverGender() {
+        return mDriverGender;
     }
 
-    public void setmVendorGender(String mVendorGender) {
-        this.mVendorGender = mVendorGender;
+    public void setmDriverGender(String mDriverGender) {
+        this.mDriverGender = mDriverGender;
     }
 
-    public String getmVendorDob() {
-        return mVendorDob;
+    public String getmDriverDob() {
+        return mDriverDob;
     }
 
-    public void setmVendorDob(String mVendorDob) {
-        this.mVendorDob = mVendorDob;
+    public void setmDriverDob(String mDriverDob) {
+        this.mDriverDob = mDriverDob;
     }
 
-    public String getmVendorImg() {
-        return mVendorImg;
+    public String getmDriverImg() {
+        return mDriverImg;
     }
 
-    public void setmVendorImg(String mVendorImg) {
-        this.mVendorImg = mVendorImg;
+    public void setmDriverImg(String mDriverImg) {
+        this.mDriverImg = mDriverImg;
     }
 
-    public String getmVendorOtp() {
-        return mVendorOtp;
+    public String getmDriverOtp() {
+        return mDriverOtp;
     }
 
-    public void setmVendorOtp(String mVendorOtp) {
-        this.mVendorOtp = mVendorOtp;
+    public void setmDriverOtp(String mDriverOtp) {
+        this.mDriverOtp = mDriverOtp;
     }
 
-    public String getmVendorAdharNo() {
-        return mVendorAdharNo;
+    public String getmDriverAdharNo() {
+        return mDriverAdharNo;
     }
 
-    public void setmVendorAdharNo(String mVendorAdharNo) {
-        this.mVendorAdharNo = mVendorAdharNo;
+    public void setmDriverAdharNo(String mDriverAdharNo) {
+        this.mDriverAdharNo = mDriverAdharNo;
     }
 
-    public String getmVendorAdharFront() {
-        return mVendorAdharFront;
+    public String getmDriverAdharFront() {
+        return mDriverAdharFront;
     }
 
-    public void setmVendorAdharFront(String mVendorAdharFront) {
-        this.mVendorAdharFront = mVendorAdharFront;
+    public void setmDriverAdharFront(String mDriverAdharFront) {
+        this.mDriverAdharFront = mDriverAdharFront;
     }
 
-    public String getmVendorAdharBack() {
-        return mVendorAdharBack;
+    public String getmDriverAdharBack() {
+        return mDriverAdharBack;
     }
 
-    public void setmVendorAdharBack(String mVendorAdharBack) {
-        this.mVendorAdharBack = mVendorAdharBack;
+    public void setmDriverAdharBack(String mDriverAdharBack) {
+        this.mDriverAdharBack = mDriverAdharBack;
     }
 
-    public String getmVendorLicNo() {
-        return mVendorLicNo;
+    public String getmDriverLicNo() {
+        return mDriverLicNo;
     }
 
-    public void setmVendorLicNo(String mVendorLicNo) {
-        this.mVendorLicNo = mVendorLicNo;
+    public void setmDriverLicNo(String mDriverLicNo) {
+        this.mDriverLicNo = mDriverLicNo;
     }
 
-    public String getmVendorLicImg() {
-        return mVendorLicImg;
+    public String getmDriverLicImg() {
+        return mDriverLicImg;
     }
 
-    public void setmVendorLicImg(String mVendorLicImg) {
-        this.mVendorLicImg = mVendorLicImg;
+    public void setmDriverLicImg(String mDriverLicImg) {
+        this.mDriverLicImg = mDriverLicImg;
     }
 
-    public String getmVendorPanNo() {
-        return mVendorPanNo;
+    public String getmDriverPanNo() {
+        return mDriverPanNo;
     }
 
-    public void setmVendorPanNo(String mVendorPanNo) {
-        this.mVendorPanNo = mVendorPanNo;
+    public void setmDriverPanNo(String mDriverPanNo) {
+        this.mDriverPanNo = mDriverPanNo;
     }
 
-    public String getmVendorPanImg() {
-        return mVendorPanImg;
+    public String getmDriverPanImg() {
+        return mDriverPanImg;
     }
 
-    public void setmVendorPanImg(String mVendorPanImg) {
-        this.mVendorPanImg = mVendorPanImg;
+    public void setmDriverPanImg(String mDriverPanImg) {
+        this.mDriverPanImg = mDriverPanImg;
     }
 
-    public String getmVendorVehicleType() {
-        return mVendorVehicleType;
+    public String getmDriverVehicleType() {
+        return mDriverVehicleType;
     }
 
-    public void setmVendorVehicleType(String mVendorVehicleType) {
-        this.mVendorVehicleType = mVendorVehicleType;
+    public void setmDriverVehicleType(String mDriverVehicleType) {
+        this.mDriverVehicleType = mDriverVehicleType;
     }
 
-    public String getmVendorVehicleRegNo() {
-        return mVendorVehicleRegNo;
+    public String getmDriverVehicleRegNo() {
+        return mDriverVehicleRegNo;
     }
 
-    public void setmVendorVehicleRegNo(String mVendorVehicleRegNo) {
-        this.mVendorVehicleRegNo = mVendorVehicleRegNo;
+    public void setmDriverVehicleRegNo(String mDriverVehicleRegNo) {
+        this.mDriverVehicleRegNo = mDriverVehicleRegNo;
     }
 
-    public String getmVendorState() {
-        return mVendorState;
+    public String getmDriverState() {
+        return mDriverState;
     }
 
-    public void setmVendorState(String mVendorState) {
-        this.mVendorState = mVendorState;
+    public void setmDriverState(String mDriverState) {
+        this.mDriverState = mDriverState;
     }
 
-    public String getmVendorCity() {
-        return mVendorCity;
+    public String getmDriverCity() {
+        return mDriverCity;
     }
 
-    public void setmVendorCity(String mVendorCity) {
-        this.mVendorCity = mVendorCity;
+    public void setmDriverCity(String mDriverCity) {
+        this.mDriverCity = mDriverCity;
     }
 
-    public String getmVendorAddress() {
-        return mVendorAddress;
+    public String getmDriverAddress() {
+        return mDriverAddress;
     }
 
-    public void setmVendorAddress(String mVendorAddress) {
-        this.mVendorAddress = mVendorAddress;
+    public void setmDriverAddress(String mDriverAddress) {
+        this.mDriverAddress = mDriverAddress;
     }
 
-    public String getmVendorPincode() {
-        return mVendorPincode;
+    public String getmDriverPincode() {
+        return mDriverPincode;
     }
 
-    public void setmVendorPincode(String mVendorPincode) {
-        this.mVendorPincode = mVendorPincode;
+    public void setmDriverPincode(String mDriverPincode) {
+        this.mDriverPincode = mDriverPincode;
     }
 
-    public String getmVendorBranch() {
-        return mVendorBranch;
+    public String getmDriverBranch() {
+        return mDriverBranch;
     }
 
-    public void setmVendorBranch(String mVendorBranch) {
-        this.mVendorBranch = mVendorBranch;
+    public void setmDriverBranch(String mDriverBranch) {
+        this.mDriverBranch = mDriverBranch;
     }
 
-    public String getmVendorBusinessName() {
-        return mVendorBusinessName;
+    public String getmDriverBusinessName() {
+        return mDriverBusinessName;
     }
 
-    public void setmVendorBusinessName(String mVendorBusinessName) {
-        this.mVendorBusinessName = mVendorBusinessName;
+    public void setmDriverBusinessName(String mDriverBusinessName) {
+        this.mDriverBusinessName = mDriverBusinessName;
     }
 
-    public String getmVendorBusinessAddress() {
-        return mVendorBusinessAddress;
+    public String getmDriverBusinessAddress() {
+        return mDriverBusinessAddress;
     }
 
-    public void setmVendorBusinessAddress(String mVendorBusinessAddress) {
-        this.mVendorBusinessAddress = mVendorBusinessAddress;
+    public void setmDriverBusinessAddress(String mDriverBusinessAddress) {
+        this.mDriverBusinessAddress = mDriverBusinessAddress;
     }
 
-    public String getmVendorBusinessEmail() {
-        return mVendorBusinessEmail;
+    public String getmDriverBusinessEmail() {
+        return mDriverBusinessEmail;
     }
 
-    public void setmVendorBusinessEmail(String mVendorBusinessEmail) {
-        this.mVendorBusinessEmail = mVendorBusinessEmail;
+    public void setmDriverBusinessEmail(String mDriverBusinessEmail) {
+        this.mDriverBusinessEmail = mDriverBusinessEmail;
     }
 
-    public String getmVendorBusinessPhone() {
-        return mVendorBusinessPhone;
+    public String getmDriverBusinessPhone() {
+        return mDriverBusinessPhone;
     }
 
-    public void setmVendorBusinessPhone(String mVendorBusinessPhone) {
-        this.mVendorBusinessPhone = mVendorBusinessPhone;
+    public void setmDriverBusinessPhone(String mDriverBusinessPhone) {
+        this.mDriverBusinessPhone = mDriverBusinessPhone;
     }
 
-    public String getmVendorBusinessLicNo() {
-        return mVendorBusinessLicNo;
+    public String getmDriverBusinessLicNo() {
+        return mDriverBusinessLicNo;
     }
 
-    public void setmVendorBusinessLicNo(String mVendorBusinessLicNo) {
-        this.mVendorBusinessLicNo = mVendorBusinessLicNo;
+    public void setmDriverBusinessLicNo(String mDriverBusinessLicNo) {
+        this.mDriverBusinessLicNo = mDriverBusinessLicNo;
     }
 
-    public String getmVendorBusinessLicImgFront() {
-        return mVendorBusinessLicImgFront;
+    public String getmDriverBusinessLicImgFront() {
+        return mDriverBusinessLicImgFront;
     }
 
-    public void setmVendorBusinessLicImgFront(String mVendorBusinessLicImgFront) {
-        this.mVendorBusinessLicImgFront = mVendorBusinessLicImgFront;
+    public void setmDriverBusinessLicImgFront(String mDriverBusinessLicImgFront) {
+        this.mDriverBusinessLicImgFront = mDriverBusinessLicImgFront;
     }
 
-    public String getmVendorBusinessLicImgBack() {
-        return mVendorBusinessLicImgBack;
+    public String getmDriverBusinessLicImgBack() {
+        return mDriverBusinessLicImgBack;
     }
 
-    public void setmVendorBusinessLicImgBack(String mVendorBusinessLicImgBack) {
-        this.mVendorBusinessLicImgBack = mVendorBusinessLicImgBack;
+    public void setmDriverBusinessLicImgBack(String mDriverBusinessLicImgBack) {
+        this.mDriverBusinessLicImgBack = mDriverBusinessLicImgBack;
     }
 
-    public String getmVendorBankHolderName() {
-        return mVendorBankHolderName;
+    public String getmDriverBankHolderName() {
+        return mDriverBankHolderName;
     }
 
-    public void setmVendorBankHolderName(String mVendorBankHolderName) {
-        this.mVendorBankHolderName = mVendorBankHolderName;
+    public void setmDriverBankHolderName(String mDriverBankHolderName) {
+        this.mDriverBankHolderName = mDriverBankHolderName;
     }
 
-    public String getmVendorBankName() {
-        return mVendorBankName;
+    public String getmDriverBankName() {
+        return mDriverBankName;
     }
 
-    public void setmVendorBankName(String mVendorBankName) {
-        this.mVendorBankName = mVendorBankName;
+    public void setmDriverBankName(String mDriverBankName) {
+        this.mDriverBankName = mDriverBankName;
     }
 
-    public String getmVendorBankAccNo() {
-        return mVendorBankAccNo;
+    public String getmDriverBankAccNo() {
+        return mDriverBankAccNo;
     }
 
-    public void setmVendorBankAccNo(String mVendorBankAccNo) {
-        this.mVendorBankAccNo = mVendorBankAccNo;
+    public void setmDriverBankAccNo(String mDriverBankAccNo) {
+        this.mDriverBankAccNo = mDriverBankAccNo;
     }
 
-    public String getmVendorBankIfscCode() {
-        return mVendorBankIfscCode;
+    public String getmDriverBankIfscCode() {
+        return mDriverBankIfscCode;
     }
 
-    public void setmVendorBankIfscCode(String mVendorBankIfscCode) {
-        this.mVendorBankIfscCode = mVendorBankIfscCode;
+    public void setmDriverBankIfscCode(String mDriverBankIfscCode) {
+        this.mDriverBankIfscCode = mDriverBankIfscCode;
     }
 
-    public String getmVendorBankPsbkImg() {
-        return mVendorBankPsbkImg;
+    public String getmDriverBankPsbkImg() {
+        return mDriverBankPsbkImg;
     }
 
-    public void setmVendorBankPsbkImg(String mVendorBankPsbkImg) {
-        this.mVendorBankPsbkImg = mVendorBankPsbkImg;
+    public void setmDriverBankPsbkImg(String mDriverBankPsbkImg) {
+        this.mDriverBankPsbkImg = mDriverBankPsbkImg;
     }
 
-    public String getmVendorBankUpi() {
-        return mVendorBankUpi;
+    public String getmDriverBankUpi() {
+        return mDriverBankUpi;
     }
 
-    public void setmVendorBankUpi(String mVendorBankUpi) {
-        this.mVendorBankUpi = mVendorBankUpi;
+    public void setmDriverBankUpi(String mDriverBankUpi) {
+        this.mDriverBankUpi = mDriverBankUpi;
     }
 
-    public String getmVendorBankPp() {
-        return mVendorBankPp;
+    public String getmDriverBankPp() {
+        return mDriverBankPp;
     }
 
-    public void setmVendorBankPp(String mVendorBankPp) {
-        this.mVendorBankPp = mVendorBankPp;
+    public void setmDriverBankPp(String mDriverBankPp) {
+        this.mDriverBankPp = mDriverBankPp;
     }
 
-    public String getmVendorBankGp() {
-        return mVendorBankGp;
+    public String getmDriverBankGp() {
+        return mDriverBankGp;
     }
 
-    public void setmVendorBankGp(String mVendorBankGp) {
-        this.mVendorBankGp = mVendorBankGp;
+    public void setmDriverBankGp(String mDriverBankGp) {
+        this.mDriverBankGp = mDriverBankGp;
     }
 
-    public String getmVendorStatus() {
-        return mVendorStatus;
+    public String getmDriverStatus() {
+        return mDriverStatus;
     }
 
-    public void setmVendorStatus(String mVendorStatus) {
-        this.mVendorStatus = mVendorStatus;
+    public void setmDriverStatus(String mDriverStatus) {
+        this.mDriverStatus = mDriverStatus;
     }
 
-    public String getmVendorFcmtoken() {
-        return mVendorFcmtoken;
+    public String getmDriverFcmtoken() {
+        return mDriverFcmtoken;
     }
 
-    public void setmVendorFcmtoken(String mVendorFcmtoken) {
-        this.mVendorFcmtoken = mVendorFcmtoken;
+    public void setmDriverFcmtoken(String mDriverFcmtoken) {
+        this.mDriverFcmtoken = mDriverFcmtoken;
     }
 
-    public String getmVendorAddedon() {
-        return mVendorAddedon;
+    public String getmDriverAddedon() {
+        return mDriverAddedon;
     }
 
-    public void setmVendorAddedon(String mVendorAddedon) {
-        this.mVendorAddedon = mVendorAddedon;
+    public void setmDriverAddedon(String mDriverAddedon) {
+        this.mDriverAddedon = mDriverAddedon;
     }
 
-    public String getmVendorUpdatedon() {
-        return mVendorUpdatedon;
+    public String getmDriverUpdatedon() {
+        return mDriverUpdatedon;
     }
 
-    public void setmVendorUpdatedon(String mVendorUpdatedon) {
-        this.mVendorUpdatedon = mVendorUpdatedon;
+    public void setmDriverUpdatedon(String mDriverUpdatedon) {
+        this.mDriverUpdatedon = mDriverUpdatedon;
     }
 }
