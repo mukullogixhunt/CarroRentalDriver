@@ -29,7 +29,10 @@
             android:layout_height="wrap_content"
             android:numStars="5"
             android:stepSize="1"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:progressTint="@color/golden"
+            android:secondaryProgressTint="@color/golden"
+            android:progressBackgroundTint="@color/rating_gray" />
 
         <TextView
             android:id="@+id/tvRatingValue"
