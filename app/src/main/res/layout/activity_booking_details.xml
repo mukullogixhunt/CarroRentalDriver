@@ -428,9 +428,17 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTripCharges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/divider_color"
+                app:strokeWidth="1dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -598,7 +606,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 
