@@ -300,9 +300,7 @@ public class BookingDetailsActivity extends BaseActivity {
                 try {
                     if (String.valueOf(response.code()).equalsIgnoreCase(Constant.SUCCESS_RESPONSE_CODE)) {
                         if (response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
-                            showAlert("Booking Completed Successfully!...");
                             getBookingDetails(bookingId);
-
                         } else {
 
                         }
