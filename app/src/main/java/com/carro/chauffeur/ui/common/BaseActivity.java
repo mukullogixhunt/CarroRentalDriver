@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +26,19 @@ public class BaseActivity extends AppCompatActivity {
         baseActivity = this;
         //progress dialog
         mProgressDialog = new CustomProgressDialog(this);
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
 
+                // Block back if loader is showing
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    return;
+                }
+
+                // Default single back action
+                finish();
+            }
+        });
     }
 
     /**
