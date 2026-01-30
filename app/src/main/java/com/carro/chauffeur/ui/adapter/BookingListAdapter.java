@@ -1,5 +1,8 @@
 package com.carro.chauffeur.ui.adapter;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +79,13 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         holder.binding.tvCustomerName.setText(item.getmCustName());
         holder.binding.tvBookingId.setText("Booking Id : " + item.getmBkingId());
         holder.binding.tvPickupDetails.setText("Pickup : " + item.getmBkingFrom());
-        holder.binding.tvAmount.setText(new IndianCurrencyFormat().inCuFormatText(item.getmBkingTotal()));
+        holder.binding.tvAmount.setText(
+                new IndianCurrencyFormat().inCuFormatText(
+                        item.getmBkingTotal() == null || item.getmBkingTotal().isEmpty()
+                                ? "0"
+                                : (Double.parseDouble(item.getmBkingTotal()) * 0.8)+""
+                )
+        );
 
         String pick_date;
         String pick_time;
@@ -126,6 +135,13 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                 holder.binding.btnStatus.setBackgroundColor(
                         ContextCompat.getColor(context, R.color.green)
                 );
+                if(item.getmBkingOStatus().equals("0")){
+                    holder.binding.ivCall.setVisibility(VISIBLE);
+                    holder.binding.ivMsg.setVisibility(VISIBLE);
+                }else{
+                    holder.binding.ivCall.setVisibility(GONE);
+                    holder.binding.ivMsg.setVisibility(GONE);
+                }
                 break;
 
             case "4": // Cancelled
@@ -133,6 +149,8 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                 holder.binding.btnStatus.setBackgroundColor(
                         ContextCompat.getColor(context, R.color.red)
                 );
+                holder.binding.ivCall.setVisibility(GONE);
+                holder.binding.ivMsg.setVisibility(GONE);
                 break;
 
             default:
@@ -140,6 +158,8 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                 holder.binding.btnStatus.setBackgroundColor(
                         ContextCompat.getColor(context, R.color.gray)
                 );
+                holder.binding.ivCall.setVisibility(GONE);
+                holder.binding.ivMsg.setVisibility(GONE);
                 break;
         }
 
@@ -170,19 +190,19 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                 break;
             case "3":
                 holder.binding.tvTripType.setText("Luxury Cars Service");
-                holder.binding.ivView.setVisibility(View.GONE);
-                holder.binding.ivLastDn.setVisibility(View.GONE);
-                holder.binding.ivFirstDn.setVisibility(View.GONE);
-                holder.binding.tvToDate.setVisibility(View.GONE);
-                holder.binding.tvToLocation.setVisibility(View.GONE);
+                holder.binding.ivView.setVisibility(GONE);
+                holder.binding.ivLastDn.setVisibility(GONE);
+                holder.binding.ivFirstDn.setVisibility(GONE);
+                holder.binding.tvToDate.setVisibility(GONE);
+                holder.binding.tvToLocation.setVisibility(GONE);
                 break;
             case "4":
                 holder.binding.tvTripType.setText("Bus Booking Service");
-                holder.binding.ivView.setVisibility(View.GONE);
-                holder.binding.ivLastDn.setVisibility(View.GONE);
-                holder.binding.ivFirstDn.setVisibility(View.GONE);
-                holder.binding.tvToDate.setVisibility(View.GONE);
-                holder.binding.tvToLocation.setVisibility(View.GONE);
+                holder.binding.ivView.setVisibility(GONE);
+                holder.binding.ivLastDn.setVisibility(GONE);
+                holder.binding.ivFirstDn.setVisibility(GONE);
+                holder.binding.tvToDate.setVisibility(GONE);
+                holder.binding.tvToLocation.setVisibility(GONE);
                 break;
         }
 

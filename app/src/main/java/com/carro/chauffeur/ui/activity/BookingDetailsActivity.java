@@ -212,7 +212,13 @@ public class BookingDetailsActivity extends BaseActivity {
                         binding.tvCustomerName.setText(item.getmCustName());
                         binding.tvBookingId.setText("Booking Id : " + item.getmBkingId());
                         binding.tvPickupDetails.setText("Pickup : " + item.getmBkingFrom());
-                        binding.tvAmount.setText(new IndianCurrencyFormat().inCuFormatText(item.getmBkingTotal()));
+                        binding.tvAmount.setText(
+                                new IndianCurrencyFormat().inCuFormatText(
+                                        item.getmBkingTotal() == null || item.getmBkingTotal().isEmpty()
+                                                ? "0"
+                                                : (Double.parseDouble(item.getmBkingTotal()) * 0.8)+""
+                                )
+                        );
 
                         String pick_date;
                         String pick_time;
@@ -268,12 +274,12 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.tvToLocation.setVisibility(GONE);
                                 break;
                         }
-                        if(item.getmBkingOStatus().equals("2")){
-                            binding.ivCall.setVisibility(GONE);
-                            binding.ivMsg.setVisibility(GONE);
-                        }else{
+                        if(item.getmBkingOStatus().equals("0")){
                             binding.ivCall.setVisibility(VISIBLE);
                             binding.ivMsg.setVisibility(VISIBLE);
+                        }else{
+                            binding.ivCall.setVisibility(GONE);
+                            binding.ivMsg.setVisibility(GONE);
                         }
                         binding.ivCall.setOnClickListener(new View.OnClickListener() {
                             @Override
