@@ -438,166 +438,200 @@
                 app:cardElevation="0dp"
                 app:strokeColor="@color/divider_color"
                 app:strokeWidth="1dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/_10sdp">
-
-                <!-- Title -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Trip Charges"
-                    android:textColor="@color/primary"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold" />
-
-                <!-- Meal Provided -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Meal Provided"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
 
-                    <CheckBox
-                        android:id="@+id/cbTea"
+                    <!-- Title -->
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tea" />
+                        android:text="Trip Charges"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
 
-                    <CheckBox
-                        android:id="@+id/cbLunch"
+                    <!-- Meal Provided -->
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lunch" />
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Meal Provided"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold" />
 
-                    <CheckBox
-                        android:id="@+id/cbDinner"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cbTea"
+                            android:text="Tea" />
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cbLunch"
+                            android:text="Lunch" />
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cbDinner"
+                            android:text="Dinner" />
+                    </LinearLayout>
+
+                    <!-- Toll Tax -->
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dinner" />
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Toll Tax"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rgTollTax"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbTollYes"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbTollNo"
+                            android:text="No" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/btnUploadToll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Toll Receipt (PDF)"
+                        android:textColor="@color/primary"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/btnViewToll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Toll Receipt"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <!-- Parking -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Parking"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rgParking"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbParkingYes"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbParkingNo"
+                            android:text="No" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/btnUploadParking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Parking Image/PDF"
+                        android:textColor="@color/primary"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/btnViewParking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Parking File"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <!-- Other Charges -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Other Charges"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etOtherChargeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_shape"
+                        android:hint="Charge title"
+                        android:padding="@dimen/_10sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnUploadOther"
+                        android:text="Upload Image/PDF"
+                        android:textColor="@color/primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnViewOther"
+                        android:text="View Other File"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <!-- Submit -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:gravity="end">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSubmitCharges"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Submit Charges"
+                            app:cornerRadius="@dimen/_8sdp" />
+                    </LinearLayout>
+
                 </LinearLayout>
-
-                <!-- Toll Tax -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Toll Tax"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold" />
-
-                <RadioGroup
-                    android:id="@+id/rgTollTax"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rbTollYes"
-                        android:text="Yes" />
-
-                    <RadioButton
-                        android:id="@+id/rbTollNo"
-                        android:text="No" />
-                </RadioGroup>
-
-                <TextView
-                    android:id="@+id/btnUploadToll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upload Toll Receipt (PDF)"
-                    android:textColor="@color/primary"
-                    android:visibility="gone" />
-
-                <!-- Parking -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Parking"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold" />
-
-                <RadioGroup
-                    android:id="@+id/rgParking"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rbParkingYes"
-                        android:text="Yes" />
-
-                    <RadioButton
-                        android:id="@+id/rbParkingNo"
-                        android:text="No" />
-                </RadioGroup>
-
-                <TextView
-                    android:id="@+id/btnUploadParking"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upload Parking Image/PDF"
-                    android:textColor="@color/primary"
-                    android:visibility="gone" />
-
-                <!-- Other Charges -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Other Charges"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold" />
-                <EditText
-                    android:id="@+id/etOtherChargeTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_shape"
-                    android:hint="Charge title"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:textSize="@dimen/_13ssp"
-                    android:paddingHorizontal="@dimen/_13sdp"
-                    android:paddingVertical="@dimen/_10sdp" />
-
-                <TextView
-                    android:id="@+id/btnUploadOther"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_2sdp"
-                    android:text="Upload Image/PDF"
-                    android:textColor="@color/primary" />
-
-                <!-- Buttons -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="end">
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSubmitCharges"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:text="Submit Charges"
-                        app:cornerRadius="@dimen/_8sdp" />
-                </LinearLayout>
-
-            </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </ScrollView>
 

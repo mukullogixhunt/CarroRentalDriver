@@ -204,5 +204,7 @@ public class Utils {
         }
     }
 
-
+    public static  void openInBrowser(String url, Context context) {
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+    }
 }

@@ -93,31 +93,7 @@ public class BookingDetailsActivity extends BaseActivity {
         if (bookingId != null) {
             getBookingDetails(bookingId);
         }
-        binding.rgTollTax.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rbTollYes) {
-                binding.btnUploadToll.setVisibility(View.VISIBLE);
-            } else {
-                binding.btnUploadToll.setVisibility(View.GONE);
-                tollFileUri = null;
-            }
-        });
 
-        binding.rgParking.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rbParkingYes) {
-                binding.btnUploadParking.setVisibility(View.VISIBLE);
-            } else {
-                binding.btnUploadParking.setVisibility(View.GONE);
-                parkingFileUri = null;
-            }
-        });
-        binding.btnUploadToll.setOnClickListener(v -> openFilePicker(REQ_TOLL));
-        binding.btnUploadParking.setOnClickListener(v -> openFilePicker(REQ_PARKING));
-        binding.btnUploadOther.setOnClickListener(v -> openFilePicker(REQ_OTHER));
-        binding.btnSubmitCharges.setOnClickListener(v -> {
-            if (validateTripCharges()) {
-                submitTripCharges(bKingId);
-            }
-        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -147,6 +123,7 @@ public class BookingDetailsActivity extends BaseActivity {
                 try {
                     if (response.isSuccessful() && response.body() != null && response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
                         BookingListModel item = response.body().getData().get(0);
+                        setTripData(item);
                         bKingId=item.getmBkingId();
                         if (item.getmBkingFrom().isEmpty()) {
                             binding.tvFromLocation.setText("---");
@@ -512,13 +489,13 @@ public class BookingDetailsActivity extends BaseActivity {
         String otherTitle = binding.etOtherChargeTitle.getText().toString().trim();
 
         MultipartBody.Part tollImg =
-                toll.equals("Yes") ? Utils.prepareFilePart("trip_toll_tax_img", tollFileUri,BookingDetailsActivity.this) : null;
+                toll.equals("Yes") ? Utils.prepareFilePart("toll_tax_img", tollFileUri,BookingDetailsActivity.this) : null;
 
         MultipartBody.Part parkingImg =
-                parking.equals("Yes") ? Utils.prepareFilePart("trip_parking_img", parkingFileUri,BookingDetailsActivity.this) : null;
+                parking.equals("Yes") ? Utils.prepareFilePart("parking_img", parkingFileUri,BookingDetailsActivity.this) : null;
 
         MultipartBody.Part otherImg =
-                Utils.prepareFilePart("trip_other_img", otherFileUri,BookingDetailsActivity.this);
+                Utils.prepareFilePart("other_img", otherFileUri,BookingDetailsActivity.this);
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
 
@@ -572,6 +549,98 @@ public class BookingDetailsActivity extends BaseActivity {
             return false;
         }
         return true;
+    }
+
+
+    private void setTripData(BookingListModel item) {
+        binding.cbTea.setChecked("Tea".equalsIgnoreCase(item.getmBkingMealProvide()));
+        binding.cbLunch.setChecked("Lunch".equalsIgnoreCase(item.getmBkingMealProvide()));
+        binding.cbDinner.setChecked("Dinner".equalsIgnoreCase(item.getmBkingMealProvide()));
+
+        boolean tollUploaded = !TextUtils.isEmpty(item.getmBkingTollTaxImg());
+
+        if ("Yes".equalsIgnoreCase(item.getmBkingTollTax())) {
+            binding.rbTollYes.setChecked(true);
+        } else {
+            binding.rbTollNo.setChecked(true);
+        }
+
+        binding.btnUploadToll.setVisibility(tollUploaded ? View.GONE : View.VISIBLE);
+        binding.btnViewToll.setVisibility(tollUploaded ? View.VISIBLE : View.GONE);
+
+        if (tollUploaded) {
+            String tollUrl = ImagePathDecider.getBookingImgPath() + item.getmBkingTollTaxImg();
+            binding.btnViewToll.setOnClickListener(v ->
+                    Utils.openInBrowser(tollUrl, BookingDetailsActivity.this));
+        }
+        boolean parkingUploaded = !TextUtils.isEmpty(item.getmBkingParkingImg());
+
+        if ("Yes".equalsIgnoreCase(item.getmBkingParking())) {
+            binding.rbParkingYes.setChecked(true);
+        } else {
+            binding.rbParkingNo.setChecked(true);
+        }
+
+        binding.btnUploadParking.setVisibility(parkingUploaded ? View.GONE : View.VISIBLE);
+        binding.btnViewParking.setVisibility(parkingUploaded ? View.VISIBLE : View.GONE);
+
+        if (parkingUploaded) {
+            String parkingUrl = ImagePathDecider.getBookingImgPath() + item.getmBkingParkingImg();
+            binding.btnViewParking.setOnClickListener(v ->
+                    Utils.openInBrowser(parkingUrl, BookingDetailsActivity.this));
+        }
+        boolean otherUploaded = !TextUtils.isEmpty(item.getmBkingOtherImg());
+
+        if (!TextUtils.isEmpty(item.getmBkingOtherTitle())) {
+            binding.etOtherChargeTitle.setText(item.getmBkingOtherTitle());
+            binding.etOtherChargeTitle.setEnabled(false);
+            binding.etOtherChargeTitle.setFocusable(false);
+            binding.etOtherChargeTitle.setClickable(false);
+        } else {
+            binding.etOtherChargeTitle.setEnabled(true);
+            binding.etOtherChargeTitle.setFocusable(true);
+            binding.etOtherChargeTitle.setFocusableInTouchMode(true);
+        }
+
+        binding.btnUploadOther.setVisibility(otherUploaded ? View.GONE : View.VISIBLE);
+        binding.btnViewOther.setVisibility(otherUploaded ? View.VISIBLE : View.GONE);
+
+        if (otherUploaded) {
+            String otherUrl = ImagePathDecider.getBookingImgPath() + item.getmBkingOtherImg();
+            binding.btnViewOther.setOnClickListener(v ->
+                    Utils.openInBrowser(otherUrl, BookingDetailsActivity.this));
+        }
+
+        boolean alreadySubmitted = tollUploaded || parkingUploaded || otherUploaded;
+        binding.btnSubmitCharges.setVisibility(alreadySubmitted ? View.GONE : View.VISIBLE);
+
+        binding.rgTollTax.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbTollYes && !tollUploaded) {
+                binding.btnUploadToll.setVisibility(View.VISIBLE);
+            } else {
+                binding.btnUploadToll.setVisibility(View.GONE);
+                tollFileUri = null;
+            }
+        });
+
+        binding.rgParking.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbParkingYes && !parkingUploaded) {
+                binding.btnUploadParking.setVisibility(View.VISIBLE);
+            } else {
+                binding.btnUploadParking.setVisibility(View.GONE);
+                parkingFileUri = null;
+            }
+        });
+
+        binding.btnUploadToll.setOnClickListener(v -> openFilePicker(REQ_TOLL));
+        binding.btnUploadParking.setOnClickListener(v -> openFilePicker(REQ_PARKING));
+        binding.btnUploadOther.setOnClickListener(v -> openFilePicker(REQ_OTHER));
+
+        binding.btnSubmitCharges.setOnClickListener(v -> {
+            if (validateTripCharges()) {
+                submitTripCharges(bKingId);
+            }
+        });
     }
 
 
