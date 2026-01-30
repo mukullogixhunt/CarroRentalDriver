@@ -117,6 +117,15 @@ public class Constant {
         String USER_BUSINESS_LIC_NO = "user_business_lic_no";
         String USER_BUSINESS_LIC_FRONT = "b_lic_img_front";
         String USER_BUSINESS_LIC_BACK = "b_lic_img_back";
+        String CUSTOMER_B_KING_ID = "bking_user";
+        String CUSTOMER_RATING = "m_review_rating";
+        String CUSTOMER_REVIEW_REMARK = "m_review_remark";
+        String CUSTOMER_BOOK_NEXT = "m_review_book_next";
+        String CUSTOMER_BOOK_NEXT_DATE = "m_review_book_next_date";
+        String CUSTOMER_REVIEW_TYPE = "review_type";
+
+
+
 
     }
 
@@ -164,6 +173,7 @@ public class Constant {
         String UPDATE_CANCEL_BOOKING = "update_cancel_booking";
         String COMPLETE_BOOKING = "complete_booking";
         String UPDATE_COMPLETE_BOOKING = "update_complete_booking";
+        String UPDATE_CUSTOMER_REVIEW = "update_review";
         String BRANCH = "branch";
         String GET_STATE_CITIES = "get_state_cities";
         String GET_COUNTRY_STATE = "get_country_state";

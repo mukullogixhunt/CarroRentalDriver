@@ -9,37 +9,37 @@
     tools:context=".ui.activity.EditProfileActivity">
 
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/icn_arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@color/primary"
-            android:orientation="horizontal"
-            android:padding="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/_20sdp"
+            android:text="@string/booking_details"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_gravity="center"
-                android:src="@drawable/icn_arrow_back"
-                app:tint="@color/white" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:paddingStart="@dimen/_20sdp"
-                android:text="@string/booking_details"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -89,6 +89,7 @@
                             android:text="Sedan (AC)"
                             android:textColor="@color/primary"
                             android:textSize="@dimen/_12ssp" />
+
                         <TextView
                             android:id="@+id/tv_trip_type"
                             android:layout_width="match_parent"
@@ -428,6 +429,176 @@
             </com.google.android.material.card.MaterialCardView>
 
 
+            <LinearLayout
+                android:id="@+id/cardTripCharges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <!-- Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trip Charges"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
+
+                <!-- Meal Provided -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="Meal Provided"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbTea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tea" />
+
+                    <CheckBox
+                        android:id="@+id/cbLunch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lunch" />
+
+                    <CheckBox
+                        android:id="@+id/cbDinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dinner" />
+                </LinearLayout>
+
+                <!-- Toll Tax -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="Toll Tax"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgTollTax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbTollYes"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/rbTollNo"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/btnUploadToll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Toll Receipt (PDF)"
+                    android:textColor="@color/primary"
+                    android:visibility="gone" />
+
+                <!-- Parking -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="Parking"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgParking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbParkingYes"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/rbParkingNo"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/btnUploadParking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Parking Image/PDF"
+                    android:textColor="@color/primary"
+                    android:visibility="gone" />
+
+                <!-- Other Charges -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="Other Charges"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/etOtherChargeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_shape"
+                    android:hint="Charge title"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/_13ssp"
+                    android:paddingHorizontal="@dimen/_13sdp"
+                    android:paddingVertical="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/btnUploadOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_2sdp"
+                    android:text="Upload Image/PDF"
+                    android:textColor="@color/primary" />
+
+                <!-- Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="end">
+
+                    <TextView
+                        android:id="@+id/btnSkipCharges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_6sdp"
+                        android:text="Skip for now"
+                        android:textColor="@color/gray_dark" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSubmitCharges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="Submit Charges"
+                        app:cornerRadius="@dimen/_8sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
@@ -438,45 +609,45 @@
         android:layout_marginVertical="@dimen/_8sdp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <com.ncorti.slidetoact.SlideToActView
             android:id="@+id/btn_ride_completed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8sdp"
-            app:text="Ride Completed"
-            app:text_style="bold"
-            app:bump_vibration="50"
-            android:visibility="gone"
-            app:outer_color="@color/primary"
             android:layout_marginVertical="@dimen/_2sdp"
             android:layout_weight="1"
-            />
+            android:visibility="gone"
+            app:bump_vibration="50"
+            app:outer_color="@color/primary"
+            app:text="Ride Completed"
+            app:text_style="bold" />
+
         <com.ncorti.slidetoact.SlideToActView
             android:id="@+id/btn_reached_pickup_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8sdp"
-            app:text="Reached Pickup Location"
-            app:text_style="bold"
+            android:layout_marginVertical="@dimen/_2sdp"
+            android:layout_weight="1"
             android:visibility="gone"
             app:bump_vibration="50"
-            android:layout_marginVertical="@dimen/_2sdp"
             app:outer_color="@color/primary"
-            android:layout_weight="1"
-            />
+            app:text="Reached Pickup Location"
+            app:text_style="bold" />
+
         <com.ncorti.slidetoact.SlideToActView
             android:id="@+id/btn_reached_destination_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8sdp"
-            app:text="Reached Drop Location"
-            app:text_style="bold"
-            app:bump_vibration="50"
-            android:visibility="gone"
             android:layout_marginVertical="@dimen/_2sdp"
-            app:outer_color="@color/primary"
             android:layout_weight="1"
-            />
+            android:visibility="gone"
+            app:bump_vibration="50"
+            app:outer_color="@color/primary"
+            app:text="Reached Drop Location"
+            app:text_style="bold" />
 
     </LinearLayout>
 

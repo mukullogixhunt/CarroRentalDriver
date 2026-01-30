@@ -52,6 +52,7 @@ public interface ApiInterface {
             @Field(Constant.ApiKey.USER_ID) String user_id,
             @Field(Constant.ApiKey.OTP) String otp
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_CURRENT_LOC)
     Call<BaseResponse> updateCurrentLocation(
@@ -66,11 +67,13 @@ public interface ApiInterface {
             @Field(Constant.ApiKey.USER_ID) String user_id,
             @Field(Constant.ApiKey.ONLINE_OFFLINE_STATUS) String status
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.USER_DETAILS)
     Call<LoginResponse> user_details(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.CAR)
     Call<CarListResponse> car(
@@ -183,11 +186,13 @@ public interface ApiInterface {
             @Part(Constant.ApiKey.USER_ID) RequestBody user_id,
             @Part MultipartBody.Part lic_img
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.SEND_DRIVER_OTP)
     Call<DriverOtpResponse> send_driver_otp(
             @Field(Constant.ApiKey.DRIVER_MOBILE) String driver_mobile
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.VERIFY_DRIVER_OTP)
     Call<BaseResponse> verify_driver_otp(
@@ -200,6 +205,7 @@ public interface ApiInterface {
     Call<NotificationResponse> notification(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.BOOKING_DETAILS)
     Call<BookingDetailResponse> getBookingDetails(
@@ -228,18 +234,21 @@ public interface ApiInterface {
             @Part(Constant.ApiKey.CAR_ID) RequestBody car_id,
             @Part MultipartBody.Part reg_certi
     );
+
     @Multipart
     @POST(Constant.EndPoint.UPD_ISS_CERTI)
     Call<BaseResponse> upd_iss_certi(
             @Part(Constant.ApiKey.CAR_ID) RequestBody car_id,
             @Part MultipartBody.Part iss_certi
     );
+
     @Multipart
     @POST(Constant.EndPoint.UPD_CAR_PERMIT)
     Call<BaseResponse> upd_car_permit(
             @Part(Constant.ApiKey.CAR_ID) RequestBody car_id,
             @Part MultipartBody.Part permit
     );
+
     @Multipart
     @POST(Constant.EndPoint.UPD_OWNER_CAR)
     Call<BaseResponse> upd_ownercar(
@@ -252,58 +261,75 @@ public interface ApiInterface {
     Call<WalletTransResponse> wallet(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.COUNT_WALLET)
     Call<WalletCountResponse> countWallet(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.NEW_BOOKING)
-    Call<BookingListResponse>new_booking(
+    Call<BookingListResponse> new_booking(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.ACTIVE_BOOKING)
-    Call<BookingListResponse>active_booking(
+    Call<BookingListResponse> active_booking(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.BOOKING_HISTORY)
-    Call<BookingListResponse>booking_history(
+    Call<BookingListResponse> booking_history(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_CAR_DRIVER)
-    Call<BaseResponse>update_car_driver(
+    Call<BaseResponse> update_car_driver(
             @Field(Constant.ApiKey.CAR_ID) String car_id,
             @Field(Constant.ApiKey.DRIVER_ID) String driver_id,
             @Field(Constant.ApiKey.BKING_ID) String bking_id
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_CANCEL_BOOKING)
-    Call<BaseResponse>cancel_booking(
+    Call<BaseResponse> cancel_booking(
             @Field(Constant.ApiKey.BKING_ID) String bking_id
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_COMPLETE_BOOKING)
     Call<BaseResponse> updateBookingStatus(
             @Field(Constant.ApiKey.BKING_ID) String bking_id,
             @Field(Constant.ApiKey.BKING_STATUS) String bking_status
-            );
+    );
+
+    @FormUrlEncoded
+    @POST(Constant.EndPoint.UPDATE_CUSTOMER_REVIEW)
+    Call<BaseResponse> updateCustomerReview(
+            @Field(Constant.ApiKey.BKING_ID) String bking_id,
+            @Field(Constant.ApiKey.CUSTOMER_B_KING_ID) String bking_user,
+            @Field(Constant.ApiKey.CUSTOMER_RATING) String m_review_rating,
+            @Field(Constant.ApiKey.CUSTOMER_REVIEW_REMARK) String m_review_remark,
+            @Field(Constant.ApiKey.CUSTOMER_BOOK_NEXT) String m_review_book_next,  // 1 for yes and 0 for no
+            @Field(Constant.ApiKey.CUSTOMER_BOOK_NEXT_DATE) String m_review_book_next_date,
+            @Field(Constant.ApiKey.CUSTOMER_REVIEW_TYPE) String review_type
+    );
 
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.INSERT_WALLET)
-    Call<BaseResponse>insert_wallet(
+    Call<BaseResponse> insert_wallet(
             @Field(Constant.ApiKey.USER_ID) String user_id,
             @Field(Constant.ApiKey.AMOUNT) String amount
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_BANK_DETAILS)
-    Call<BaseResponse>update_bank_details(
+    Call<BaseResponse> update_bank_details(
             @Field(Constant.ApiKey.USER_ID) String user_id,
             @Field(Constant.ApiKey.BANK_HOLDER_NAME) String bank_holder_name,
             @Field(Constant.ApiKey.BANK_NAME) String bank_name,
@@ -316,7 +342,6 @@ public interface ApiInterface {
 
     @POST(Constant.EndPoint.HOME_PAGE)
     Call<HomePageResponse> home_page();
-
 
 
     @Multipart
@@ -334,7 +359,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.RECENT_PAID_WALLET)
-    Call<RecommendedResponse>recent_paid_wallet(
+    Call<RecommendedResponse> recent_paid_wallet(
             @Field(Constant.ApiKey.USER_ID) String user_id
     );
 
@@ -343,6 +368,7 @@ public interface ApiInterface {
     Call<StateResponse> get_country_state(
             @Field(Constant.ApiKey.COUNTRY_CODE) String country_code
     );
+
     @FormUrlEncoded
     @POST(Constant.EndPoint.GET_STATE_CITIES)
     Call<CityResponse> get_state_cities(

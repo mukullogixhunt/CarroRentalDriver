@@ -43,6 +43,9 @@ public class BookingDetailsActivity extends BaseActivity {
     Double currentLat;
     Double currentLng;
 
+    CustomerReviewDialogBinding customerReviewBinding;
+    BottomSheetDialog customerReviewDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,8 @@ public class BookingDetailsActivity extends BaseActivity {
         binding = ActivityBookingDetailsBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
+       customerReviewBinding = CustomerReviewDialogBinding.inflate(getLayoutInflater());
+        customerReviewDialog= new BottomSheetDialog(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -104,6 +109,7 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnNavigate.setVisibility(VISIBLE);
                                 binding.tvNavigationBtn.setText("Navigate to Pickup Location");
+                                binding.cardTripCharges.setVisibility(GONE);
                                 break;
 
                             case "5": // Reached Pickup Location
@@ -112,6 +118,7 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.btnReachedDestinationLocation.setVisibility(VISIBLE);
                                 binding.btnNavigate.setVisibility(VISIBLE);
                                 binding.tvNavigationBtn.setText("Navigate to Drop Location");
+                                binding.cardTripCharges.setVisibility(GONE);
                                 break;
 
                             case "6": // Reached Destination
@@ -119,6 +126,8 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.btnRideCompleted.setVisibility(VISIBLE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
                                 binding.btnNavigate.setVisibility(GONE);
+                                binding.cardTripCharges.setVisibility(GONE);
+                                binding.cardTripCharges.setVisibility(GONE);
                                 break;
 
                             case "3": // Completed
@@ -126,7 +135,15 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
                                 binding.btnNavigate.setVisibility(GONE);
-                                showCustomerReviewBottomDialog();
+                                binding.cardTripCharges.setVisibility(VISIBLE);
+                                /**
+                                 * 0-> not given review
+                                 * 1-> skip review
+                                 * 2-> given review
+                                 */
+                                if(item.getmBkingOStatus().equals("0")) {
+                                    showCustomerReviewBottomDialog(item.getmBkingId(), item.getmBkingUser());
+                                }
                                 break;
 
                             case "4": // Cancelled
@@ -134,6 +151,7 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
                                 binding.btnNavigate.setVisibility(GONE);
+                                binding.cardTripCharges.setVisibility(GONE);
                                 break;
 
                             default:
@@ -141,6 +159,7 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
                                 binding.btnNavigate.setVisibility(GONE);
+                                binding.cardTripCharges.setVisibility(GONE);
                                 break;
                         }
 
@@ -214,12 +233,21 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.tvToLocation.setVisibility(GONE);
                                 break;
                         }
-
+                        if(item.getmBkingOStatus().equals("2")){
+                            binding.ivCall.setVisibility(GONE);
+                            binding.ivMsg.setVisibility(GONE);
+                        }else{
+                            binding.ivCall.setVisibility(VISIBLE);
+                            binding.ivMsg.setVisibility(VISIBLE);
+                        }
                         binding.ivCall.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Utils.openDialer(BookingDetailsActivity.this, item.getmCustMobile());
                             }
+                        });
+                        binding.ivMsg.setOnClickListener(v -> {
+                            Utils.openSms(BookingDetailsActivity.this, item.getmCustMobile(), "Hi," + item.getmCustName());
                         });
                         binding.btnNavigate.setOnClickListener(v -> {
                             if (item.getmBkingStatus().equals("2")) {
@@ -239,9 +267,7 @@ public class BookingDetailsActivity extends BaseActivity {
                                         item.getmCustCurLocLng());
                             }
                         });
-                        binding.ivMsg.setOnClickListener(v -> {
-                            Utils.openSms(BookingDetailsActivity.this, item.getmCustMobile(), "Hi," + item.getmCustName());
-                        });
+
                         binding.btnReachedPickupLocation.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
                             @Override
                             public void onSlideComplete(@NonNull SlideToActView view) {
@@ -320,61 +346,83 @@ public class BookingDetailsActivity extends BaseActivity {
             }
         });
     }
-    private void showCustomerReviewBottomDialog() {
 
-        CustomerReviewDialogBinding binding =
-                CustomerReviewDialogBinding.inflate(getLayoutInflater());
+    private void updateCustomerReview(String bookingId,String customerBkingId,String rating, String remark,String bookNext,String bookingDate,String reviewType) {
+        /**
+         *  reviewType
+         *  1-> for given
+         *  2-> for skip review
+         */
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<BaseResponse> call = apiInterface.updateCustomerReview(bookingId,customerBkingId,rating,remark,bookNext,bookingDate,reviewType);
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        dialog.setContentView(binding.getRoot());
-        dialog.setCancelable(false);
-        dialog.show();
-        // Rating
-        binding.ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
-            binding.tvRatingValue.setText(rating + "/5");
+                try {
+                    if (String.valueOf(response.code()).equalsIgnoreCase(Constant.SUCCESS_RESPONSE_CODE)) {
+                        if (response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
+                            getBookingDetails(bookingId);
+                            customerReviewDialog.dismiss();
+                        } else {
+
+                        }
+                    } else {
+                        customerReviewDialog.dismiss();
+                    }
+
+                } catch (Exception e) {
+                    customerReviewDialog.dismiss();
+                    e.printStackTrace();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                customerReviewDialog.dismiss();
+            }
+        });
+    }
+    private void showCustomerReviewBottomDialog(String bookingId,String customerBKingId) {
+        customerReviewDialog.setContentView(customerReviewBinding.getRoot());
+        customerReviewDialog.setCancelable(false);
+        customerReviewDialog.show();
+        customerReviewBinding.ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            customerReviewBinding.tvRatingValue.setText(rating + "/5");
         });
 
-        binding.rbYes.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        customerReviewBinding.rbYes.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                binding.layoutDateTime.setVisibility(View.VISIBLE);
+                customerReviewBinding.layoutDateTime.setVisibility(View.VISIBLE);
             }
         });
 
-        binding.rbNo.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        customerReviewBinding.rbNo.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                binding.layoutDateTime.setVisibility(View.GONE);
+                customerReviewBinding.layoutDateTime.setVisibility(View.GONE);
             }
         });
-        binding.tvSelectDate.setOnClickListener(v -> {
+        customerReviewBinding.tvSelectDate.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
                     (view, year, month, dayOfMonth) -> {
-                        binding.tvSelectDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                        String formattedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth);
+                        customerReviewBinding.tvSelectDate.setText(formattedDate);
                     },
-                    2024, 0, 1
+                    2024, 0, 1 // default date
             );
             datePickerDialog.show();
         });
-        binding.tvSelectTime.setOnClickListener(v -> {
-            TimePickerDialog timePickerDialog = new TimePickerDialog(
-                    this,
-                    (view, hourOfDay, minute) -> {
-                        binding.tvSelectTime.setText(hourOfDay + ":" + minute);
-                    },
-                    12, 0, false
-            );
-            timePickerDialog.show();
-        });
-
-        binding.btnSkip.setOnClickListener(v -> dialog.dismiss());
-
-        binding.btnSubmit.setOnClickListener(v -> {
-            float rating = binding.ratingBar.getRating();
-            String remarks = binding.etRemarks.getText().toString().trim();
-            boolean wantAgain = binding.rbYes.isChecked();
-            String date = binding.tvSelectDate.getText().toString();
-            String time = binding.tvSelectTime.getText().toString();
-            dialog.dismiss();
+        customerReviewBinding.btnSkip.setOnClickListener(v ->
+                updateCustomerReview(bookingId,customerBKingId,"","","","","2")
+        );
+        customerReviewBinding.btnSubmit.setOnClickListener(v -> {
+            float rating = customerReviewBinding.ratingBar.getRating();
+            String remarks = customerReviewBinding.etRemarks.getText().toString().trim();
+            boolean wantAgain = customerReviewBinding.rbYes.isChecked();
+            String date = customerReviewBinding.tvSelectDate.getText().toString();
+           updateCustomerReview(bookingId,customerBKingId,rating+"",remarks,wantAgain?"1":"0",date,"1");
         });
     }
 

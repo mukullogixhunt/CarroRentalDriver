@@ -143,6 +143,19 @@ public class BookingListModel {
     @SerializedName("m_bking_status")
     @Expose
     private String mBkingStatus;
+
+    @SerializedName("m_bking_ostatus")
+    @Expose
+    private String mBkingOStatus;
+
+    public String getmBkingOStatus() {
+        return mBkingOStatus;
+    }
+
+    public void setmBkingOStatus(String mBkingOStatus) {
+        this.mBkingOStatus = mBkingOStatus;
+    }
+
     @SerializedName("m_bking_trans_id")
     @Expose
     private String mBkingTransId;
@@ -1210,9 +1223,7 @@ public class BookingListModel {
 //    @SerializedName("m_bking_vendor")
 //    @Expose
 //    private String mBkingVendor;
-//    @SerializedName("m_bking_user")
-//    @Expose
-//    private String mBkingUser;
+
 //    @SerializedName("m_bking_username")
 //    @Expose
 //    private String mBkingUsername;
