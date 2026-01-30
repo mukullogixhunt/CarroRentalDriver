@@ -1,15 +1,27 @@
 package com.carro.chauffeur.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.FileUtils;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class Utils {
     public static boolean isAdvShow=true;
@@ -133,5 +145,64 @@ public class Utils {
             Toast.makeText(context, "Google Maps not installed", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public static RequestBody toRequestBody(String value) {
+        return RequestBody.create(value, MediaType.parse("text/plain"));
+    }
+    private static File createTempFileFromUri(InputStream inputStream, String mimeType,Context context) throws IOException {
+
+        String extension = MimeTypeMap.getSingleton()
+                .getExtensionFromMimeType(mimeType);
+
+        if (extension == null) extension = "file";
+
+        File tempFile = File.createTempFile(
+                "upload_",
+                "." + extension,
+                context.getCacheDir()
+        );
+
+        tempFile.deleteOnExit();
+
+        OutputStream outputStream = new FileOutputStream(tempFile);
+        byte[] buffer = new byte[4096];
+        int read;
+
+        while ((read = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, read);
+        }
+
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
+
+        return tempFile;
+    }
+
+    public static MultipartBody.Part prepareFilePart(String key, Uri uri, Context context) {
+        if (uri == null) return null;
+
+        try {
+            ContentResolver contentResolver = context.getContentResolver();
+            String mimeType = contentResolver.getType(uri);
+
+            InputStream inputStream = contentResolver.openInputStream(uri);
+            File tempFile = createTempFileFromUri(inputStream, mimeType,context);
+
+            RequestBody requestBody =
+                    RequestBody.create(tempFile, MediaType.parse(mimeType));
+
+            return MultipartBody.Part.createFormData(
+                    key,
+                    tempFile.getName(),
+                    requestBody
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

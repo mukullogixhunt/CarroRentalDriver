@@ -587,15 +587,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="end">
-
-                    <TextView
-                        android:id="@+id/btnSkipCharges"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_6sdp"
-                        android:text="Skip for now"
-                        android:textColor="@color/gray_dark" />
-
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSubmitCharges"
                         android:layout_width="wrap_content"

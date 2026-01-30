@@ -5,11 +5,15 @@ import static android.view.View.VISIBLE;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -33,6 +37,9 @@ import com.carro.chauffeur.utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ncorti.slidetoact.SlideToActView;
 
+import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,9 +49,16 @@ public class BookingDetailsActivity extends BaseActivity {
 
     Double currentLat;
     Double currentLng;
+    private Uri tollFileUri = null;
+    private Uri parkingFileUri = null;
+    private Uri otherFileUri = null;
 
+    private static final int REQ_TOLL = 101;
+    private static final int REQ_PARKING = 102;
+    private static final int REQ_OTHER = 103;
     CustomerReviewDialogBinding customerReviewBinding;
     BottomSheetDialog customerReviewDialog;
+    String bKingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +93,49 @@ public class BookingDetailsActivity extends BaseActivity {
         if (bookingId != null) {
             getBookingDetails(bookingId);
         }
+        binding.rgTollTax.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbTollYes) {
+                binding.btnUploadToll.setVisibility(View.VISIBLE);
+            } else {
+                binding.btnUploadToll.setVisibility(View.GONE);
+                tollFileUri = null;
+            }
+        });
+
+        binding.rgParking.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbParkingYes) {
+                binding.btnUploadParking.setVisibility(View.VISIBLE);
+            } else {
+                binding.btnUploadParking.setVisibility(View.GONE);
+                parkingFileUri = null;
+            }
+        });
+        binding.btnUploadToll.setOnClickListener(v -> openFilePicker(REQ_TOLL));
+        binding.btnUploadParking.setOnClickListener(v -> openFilePicker(REQ_PARKING));
+        binding.btnUploadOther.setOnClickListener(v -> openFilePicker(REQ_OTHER));
+        binding.btnSubmitCharges.setOnClickListener(v -> {
+            if (validateTripCharges()) {
+                submitTripCharges(bKingId);
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            if (requestCode == REQ_TOLL) {
+                tollFileUri = uri;
+                binding.btnUploadToll.setText("Toll Receipt Selected");
+            } else if (requestCode == REQ_PARKING) {
+                parkingFileUri = uri;
+                binding.btnUploadParking.setText("Parking File Selected");
+            } else if (requestCode == REQ_OTHER) {
+                otherFileUri = uri;
+                binding.btnUploadOther.setText("Other File Selected");
+            }
+        }
     }
 
     private void getBookingDetails(String bookingId) {
@@ -90,6 +147,7 @@ public class BookingDetailsActivity extends BaseActivity {
                 try {
                     if (response.isSuccessful() && response.body() != null && response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
                         BookingListModel item = response.body().getData().get(0);
+                        bKingId=item.getmBkingId();
                         if (item.getmBkingFrom().isEmpty()) {
                             binding.tvFromLocation.setText("---");
                         } else {
@@ -425,5 +483,96 @@ public class BookingDetailsActivity extends BaseActivity {
            updateCustomerReview(bookingId,customerBKingId,rating+"",remarks,wantAgain?"1":"0",date,"1");
         });
     }
+    private void openFilePicker(int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,
+                new String[]{"application/pdf", "image/*"});
+        startActivityForResult(intent, requestCode);
+    }
+
+    private void submitTripCharges(String bkingId) {
+
+        String bookingId = bkingId;
+
+        // Meal Provided
+        ArrayList<String> meals = new ArrayList<>();
+        if (binding.cbTea.isChecked()) meals.add("Tea");
+        if (binding.cbLunch.isChecked()) meals.add("Lunch");
+        if (binding.cbDinner.isChecked()) meals.add("Dinner");
+        String mealProvided = TextUtils.join(",", meals);
+
+        // Toll
+        String toll = binding.rbTollYes.isChecked() ? "Yes" : "No";
+
+        // Parking
+        String parking = binding.rbParkingYes.isChecked() ? "Yes" : "No";
+
+        // Other (skip allowed)
+        String otherTitle = binding.etOtherChargeTitle.getText().toString().trim();
+
+        MultipartBody.Part tollImg =
+                toll.equals("Yes") ? Utils.prepareFilePart("trip_toll_tax_img", tollFileUri,BookingDetailsActivity.this) : null;
+
+        MultipartBody.Part parkingImg =
+                parking.equals("Yes") ? Utils.prepareFilePart("trip_parking_img", parkingFileUri,BookingDetailsActivity.this) : null;
+
+        MultipartBody.Part otherImg =
+                Utils.prepareFilePart("trip_other_img", otherFileUri,BookingDetailsActivity.this);
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<BaseResponse> call = api.updateTripCharge(
+                Utils.toRequestBody(bookingId),
+                Utils.toRequestBody(mealProvided),
+                Utils.toRequestBody(toll),
+                tollImg,
+                Utils.toRequestBody(parking),
+                parkingImg,
+                Utils.toRequestBody(otherTitle),
+                otherImg
+        );
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.isSuccessful() && response.body() != null &&
+                        response.body().getResult().equals(Constant.SUCCESS_RESPONSE)) {
+
+                    showAlert("Trip charges submitted");
+                    getBookingDetails(bookingId);
+
+                } else {
+                    showAlert("Submission failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+               showAlert("Something went wrong");
+            }
+        });
+    }
+    private boolean validateTripCharges() {
+        if (binding.rbTollYes.isChecked() && tollFileUri == null) {
+            showAlert("Please upload Toll receipt (PDF)");
+            return false;
+        }
+        if (binding.rbParkingYes.isChecked() && parkingFileUri == null) {
+            showAlert("Please upload Parking receipt");
+            return false;
+        }
+        String otherTitle = binding.etOtherChargeTitle.getText().toString().trim();
+        if (!otherTitle.isEmpty() && otherFileUri == null) {
+            showAlert("Please upload document for Other Charges");
+            return false;
+        }
+        if (otherTitle.isEmpty() && otherFileUri != null) {
+            showAlert("Please enter title for Other Charges");
+            return false;
+        }
+        return true;
+    }
+
 
 }

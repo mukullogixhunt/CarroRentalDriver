@@ -123,6 +123,13 @@ public class Constant {
         String CUSTOMER_BOOK_NEXT = "m_review_book_next";
         String CUSTOMER_BOOK_NEXT_DATE = "m_review_book_next_date";
         String CUSTOMER_REVIEW_TYPE = "review_type";
+        String TRIP_MEAL_PROVIDED = "meal_provide";
+        String TRIP_TOLL_TAX = "toll_tax";
+        String TRIP_TOLL_TAX_IMG = "toll_tax_img";
+        String TRIP_PARKING = "parking";
+        String TRIP_PARKING_IMG = "parking_img";
+        String TRIP_OTHER_TITLE= "other_title";
+        String TRIP_OTHER_IMG= "other_img";
 
 
 
@@ -181,6 +188,7 @@ public class Constant {
         String UPDATE_CAR_DOCUMENTS = "update_car_documents";
         String CHECK_BLOCK_WITH_ID = "check_block_with_id";
         String BOOKING_DETAILS = "booking_details";
+        String UPDATE_TRIP_CHARGE = "update_trip_charge";
 
 
 

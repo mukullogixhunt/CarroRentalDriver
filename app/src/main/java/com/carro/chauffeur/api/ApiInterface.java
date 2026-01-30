@@ -318,7 +318,18 @@ public interface ApiInterface {
             @Field(Constant.ApiKey.CUSTOMER_BOOK_NEXT_DATE) String m_review_book_next_date,
             @Field(Constant.ApiKey.CUSTOMER_REVIEW_TYPE) String review_type
     );
-
+    @Multipart
+    @POST(Constant.EndPoint.UPDATE_TRIP_CHARGE)
+    Call<BaseResponse> updateTripCharge(
+            @Part(Constant.ApiKey.BKING_ID) RequestBody bking_id,
+            @Part(Constant.ApiKey.TRIP_MEAL_PROVIDED) RequestBody mealProvided,       // e.g., "Tea,Lunch"
+            @Part(Constant.ApiKey.TRIP_TOLL_TAX) RequestBody tollTax,                 // "Yes" or "No"
+            @Part MultipartBody.Part tollTaxImg,                                       // can be null if No
+            @Part(Constant.ApiKey.TRIP_PARKING) RequestBody parking,                  // "Yes" or "No"
+            @Part MultipartBody.Part parkingImg,                                      // can be null if No
+            @Part(Constant.ApiKey.TRIP_OTHER_TITLE) RequestBody otherTitle,           // optional
+            @Part MultipartBody.Part otherImg                                         // optional
+    );
 
     @FormUrlEncoded
     @POST(Constant.EndPoint.INSERT_WALLET)
