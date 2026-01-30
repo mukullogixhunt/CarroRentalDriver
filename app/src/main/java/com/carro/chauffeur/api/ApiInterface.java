@@ -287,26 +287,12 @@ public interface ApiInterface {
     Call<BaseResponse>cancel_booking(
             @Field(Constant.ApiKey.BKING_ID) String bking_id
     );
-
     @FormUrlEncoded
     @POST(Constant.EndPoint.UPDATE_COMPLETE_BOOKING)
-    Call<BaseResponse>reachedPickupLocation(
-            @Field(Constant.ApiKey.BKING_ID) String bking_id,
-            @Field(Constant.ApiKey.BKING_STATUS) String bking_status
-    );
-
-    @FormUrlEncoded
-    @POST(Constant.EndPoint.UPDATE_COMPLETE_BOOKING)
-    Call<BaseResponse>reachedDropLocation(
+    Call<BaseResponse> updateBookingStatus(
             @Field(Constant.ApiKey.BKING_ID) String bking_id,
             @Field(Constant.ApiKey.BKING_STATUS) String bking_status
             );
-
-    @FormUrlEncoded
-    @POST(Constant.EndPoint.UPDATE_COMPLETE_BOOKING)
-    Call<BaseResponse>complete_booking(
-            @Field(Constant.ApiKey.BKING_ID) String bking_id
-    );
 
 
     @FormUrlEncoded

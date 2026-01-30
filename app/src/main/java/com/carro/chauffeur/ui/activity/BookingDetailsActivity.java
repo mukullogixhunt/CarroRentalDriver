@@ -3,6 +3,8 @@ package com.carro.chauffeur.ui.activity;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,6 +21,7 @@ import com.carro.chauffeur.api.ApiInterface;
 import com.carro.chauffeur.api.response.BookingDetailResponse;
 import com.carro.chauffeur.api.response.commonResponse.BaseResponse;
 import com.carro.chauffeur.databinding.ActivityBookingDetailsBinding;
+import com.carro.chauffeur.databinding.CustomerReviewDialogBinding;
 import com.carro.chauffeur.model.BookingListModel;
 import com.carro.chauffeur.ui.common.BaseActivity;
 import com.carro.chauffeur.utils.Constant;
@@ -27,6 +30,7 @@ import com.carro.chauffeur.utils.ImagePathDecider;
 import com.carro.chauffeur.utils.IndianCurrencyFormat;
 import com.carro.chauffeur.utils.LocationUtil;
 import com.carro.chauffeur.utils.Utils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ncorti.slidetoact.SlideToActView;
 
 import retrofit2.Call;
@@ -122,6 +126,7 @@ public class BookingDetailsActivity extends BaseActivity {
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
                                 binding.btnNavigate.setVisibility(GONE);
+                                showCustomerReviewBottomDialog();
                                 break;
 
                             case "4": // Cancelled
@@ -240,13 +245,13 @@ public class BookingDetailsActivity extends BaseActivity {
                         binding.btnReachedPickupLocation.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
                             @Override
                             public void onSlideComplete(@NonNull SlideToActView view) {
-                                reachedPickupLocation(item.getmBkingId());
+                                updateBookingStatus(item.getmBkingId(),"5");
                             }
                         });
                         binding.btnReachedDestinationLocation.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
                             @Override
                             public void onSlideComplete(@NonNull SlideToActView view) {
-                                reachedDropLocation(item.getmBkingId());
+                                updateBookingStatus(item.getmBkingId(),"6");
                             }
                         });
                         binding.btnRideCompleted.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
@@ -276,7 +281,7 @@ public class BookingDetailsActivity extends BaseActivity {
                 .setMessage("Are you sure you want to complete this ride?")
                 .setCancelable(false)
                 .setPositiveButton("Yes, Complete", (dialog, which) -> {
-                    completeBookingAPi(bookingId);
+                    updateBookingStatus(bookingId,"3");
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> {
                     dialog.dismiss();
@@ -284,57 +289,10 @@ public class BookingDetailsActivity extends BaseActivity {
                 })
                 .show();
     }
-    private void reachedPickupLocation(String bookingId) {
+
+    private void updateBookingStatus(String bookingId,String bookingStatusCode) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse> call = apiInterface.reachedPickupLocation(bookingId,"5");
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<BaseResponse> call, @NonNull Response<BaseResponse> response) {
-                try {
-                    if (response.isSuccessful() && response.body() != null && response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
-                        getBookingDetails(bookingId);
-                    } else {
-                        showError(response.message());
-                    }
-                } catch (Exception e) {
-                    showError("An error occurred.");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<BaseResponse> call, @NonNull Throwable t) {
-                showError("Something went wrong");
-            }
-        });
-    }
-
-    private void reachedDropLocation(String bookingId) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse> call = apiInterface.reachedDropLocation(bookingId,"6");
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<BaseResponse> call, @NonNull Response<BaseResponse> response) {
-                try {
-                    if (response.isSuccessful() && response.body() != null && response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
-                        getBookingDetails(bookingId);
-                    } else {
-                        showError(response.message());
-                    }
-                } catch (Exception e) {
-                    showError("An error occurred.");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<BaseResponse> call, @NonNull Throwable t) {
-                showError("Something went wrong");
-            }
-        });
-    }
-
-    private void completeBookingAPi(String bookingId) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse> call = apiInterface.complete_booking(bookingId);
+        Call<BaseResponse> call = apiInterface.updateBookingStatus(bookingId,bookingStatusCode);
         call.enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
@@ -362,6 +320,63 @@ public class BookingDetailsActivity extends BaseActivity {
             public void onFailure(Call<BaseResponse> call, Throwable t) {
 
             }
+        });
+    }
+    private void showCustomerReviewBottomDialog() {
+
+        CustomerReviewDialogBinding binding =
+                CustomerReviewDialogBinding.inflate(getLayoutInflater());
+
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(binding.getRoot());
+        dialog.setCancelable(false);
+        dialog.show();
+        // Rating
+        binding.ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            binding.tvRatingValue.setText(rating + "/5");
+        });
+
+        binding.rbYes.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                binding.layoutDateTime.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.rbNo.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                binding.layoutDateTime.setVisibility(View.GONE);
+            }
+        });
+        binding.tvSelectDate.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,
+                    (view, year, month, dayOfMonth) -> {
+                        binding.tvSelectDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                    },
+                    2024, 0, 1
+            );
+            datePickerDialog.show();
+        });
+        binding.tvSelectTime.setOnClickListener(v -> {
+            TimePickerDialog timePickerDialog = new TimePickerDialog(
+                    this,
+                    (view, hourOfDay, minute) -> {
+                        binding.tvSelectTime.setText(hourOfDay + ":" + minute);
+                    },
+                    12, 0, false
+            );
+            timePickerDialog.show();
+        });
+
+        binding.btnSkip.setOnClickListener(v -> dialog.dismiss());
+
+        binding.btnSubmit.setOnClickListener(v -> {
+            float rating = binding.ratingBar.getRating();
+            String remarks = binding.etRemarks.getText().toString().trim();
+            boolean wantAgain = binding.rbYes.isChecked();
+            String date = binding.tvSelectDate.getText().toString();
+            String time = binding.tvSelectTime.getText().toString();
+            dialog.dismiss();
         });
     }
 

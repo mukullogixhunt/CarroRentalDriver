@@ -174,17 +174,6 @@ public class ActiveBookingsFragment extends BaseFragment implements BookingClick
     }
 
     @Override
-    public void onBookingClick(BookingListModel bookingListModel, String b_status) {
-        booking_id = bookingListModel.getmBkingId();
-        if (b_status.equals("complete")) {
-            completeBookingAPi();
-        } else if (b_status.equals("cancel")) {
-            cancelBookingAPi();
-
-        }
-    }
-
-    @Override
     public void onCallClick(BookingListModel bookingListModel) {
         booking_id = bookingListModel.getmBkingId();
         Utils.openDialer(requireActivity(),bookingListModel.getmCustMobile());
@@ -200,83 +189,6 @@ public class ActiveBookingsFragment extends BaseFragment implements BookingClick
     @Override
     public void onMsgClick(BookingListModel bookingListModel) {
         booking_id = bookingListModel.getmBkingId();
-        Utils.openSms(requireActivity(),bookingListModel.getmCustMobile(),"Hi, "+bookingListModel.getmCustName());
-    }
-
-    private void cancelBookingAPi() {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse> call = apiInterface.cancel_booking(booking_id);
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-
-                try {
-                    if (String.valueOf(response.code()).equalsIgnoreCase(Constant.SUCCESS_RESPONSE_CODE)) {
-                        if (response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
-                            alertMessage("Booking Cancelled Successfully!...");
-                            getActiveBookingApi();
-
-                        } else {
-
-                        }
-                    } else {
-
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-            }
-        });
-    }
-    private void completeBookingAPi() {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse> call = apiInterface.complete_booking(booking_id);
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-
-                try {
-                    if (String.valueOf(response.code()).equalsIgnoreCase(Constant.SUCCESS_RESPONSE_CODE)) {
-                        if (response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
-                            alertMessage("Booking Completed Successfully!...");
-                            getActiveBookingApi();
-
-                        } else {
-
-                        }
-                    } else {
-
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-            }
-        });
-    }
-    private void alertMessage(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle(msg);
-        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Utils.openSms(requireActivity(), bookingListModel.getmCustMobile(), "Hi, " + bookingListModel.getmCustName());
     }
 }
