@@ -252,7 +252,8 @@ public class BookingDetailsActivity extends BaseActivity {
                         binding.btnRideCompleted.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
                             @Override
                             public void onSlideComplete(@NonNull SlideToActView view) {
-                                completeBookingAPi(item.getmBkingId());
+                                showRideCompleteConfirmation(item.getmBkingId(),view);
+                                //completeBookingAPi(item.getmBkingId());
                             }
                         });
                     } else {
@@ -269,7 +270,20 @@ public class BookingDetailsActivity extends BaseActivity {
             }
         });
     }
-
+    private void showRideCompleteConfirmation(String bookingId, SlideToActView slideView) {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Complete Ride")
+                .setMessage("Are you sure you want to complete this ride?")
+                .setCancelable(false)
+                .setPositiveButton("Yes, Complete", (dialog, which) -> {
+                    completeBookingAPi(bookingId);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.dismiss();
+                    slideView.resetSlider();
+                })
+                .show();
+    }
     private void reachedPickupLocation(String bookingId) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<BaseResponse> call = apiInterface.reachedPickupLocation(bookingId,"5");
