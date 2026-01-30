@@ -27,6 +27,7 @@ import com.carro.chauffeur.utils.ImagePathDecider;
 import com.carro.chauffeur.utils.IndianCurrencyFormat;
 import com.carro.chauffeur.utils.LocationUtil;
 import com.carro.chauffeur.utils.Utils;
+import com.ncorti.slidetoact.SlideToActView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,7 +95,6 @@ public class BookingDetailsActivity extends BaseActivity {
                         switch (item.getmBkingStatus()) {
 
                             case "2": // Accepted
-                                binding.btnCancel.setVisibility(VISIBLE);
                                 binding.btnReachedPickupLocation.setVisibility(VISIBLE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
                                 binding.btnRideCompleted.setVisibility(GONE);
@@ -103,7 +103,6 @@ public class BookingDetailsActivity extends BaseActivity {
                                 break;
 
                             case "5": // Reached Pickup Location
-                                binding.btnCancel.setVisibility(VISIBLE);
                                 binding.btnReachedPickupLocation.setVisibility(GONE);
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(VISIBLE);
@@ -112,7 +111,6 @@ public class BookingDetailsActivity extends BaseActivity {
                                 break;
 
                             case "6": // Reached Destination
-                                binding.btnCancel.setVisibility(VISIBLE);
                                 binding.btnReachedPickupLocation.setVisibility(GONE);
                                 binding.btnRideCompleted.setVisibility(VISIBLE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
@@ -120,7 +118,6 @@ public class BookingDetailsActivity extends BaseActivity {
                                 break;
 
                             case "3": // Completed
-                                binding.btnCancel.setVisibility(GONE);
                                 binding.btnReachedPickupLocation.setVisibility(GONE);
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
@@ -128,7 +125,6 @@ public class BookingDetailsActivity extends BaseActivity {
                                 break;
 
                             case "4": // Cancelled
-                                binding.btnCancel.setVisibility(GONE);
                                 binding.btnReachedPickupLocation.setVisibility(GONE);
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
@@ -136,7 +132,6 @@ public class BookingDetailsActivity extends BaseActivity {
                                 break;
 
                             default:
-                                binding.btnCancel.setVisibility(GONE);
                                 binding.btnReachedPickupLocation.setVisibility(GONE);
                                 binding.btnRideCompleted.setVisibility(GONE);
                                 binding.btnReachedDestinationLocation.setVisibility(GONE);
@@ -242,17 +237,23 @@ public class BookingDetailsActivity extends BaseActivity {
                         binding.ivMsg.setOnClickListener(v -> {
                             Utils.openSms(BookingDetailsActivity.this, item.getmCustMobile(), "Hi," + item.getmCustName());
                         });
-                        binding.btnReachedPickupLocation.setOnClickListener(v -> {
-                            reachedPickupLocation(item.getmBkingId());
+                        binding.btnReachedPickupLocation.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+                            @Override
+                            public void onSlideComplete(@NonNull SlideToActView view) {
+                                reachedPickupLocation(item.getmBkingId());
+                            }
                         });
-                        binding.btnReachedDestinationLocation.setOnClickListener(v -> {
-                            reachedDropLocation(item.getmBkingId());
+                        binding.btnReachedDestinationLocation.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+                            @Override
+                            public void onSlideComplete(@NonNull SlideToActView view) {
+                                reachedDropLocation(item.getmBkingId());
+                            }
                         });
-                        binding.btnRideCompleted.setOnClickListener(v -> {
-                            completeBookingAPi(item.getmBkingId());
-                        });
-                        binding.btnCancel.setOnClickListener(v -> {
-                            cancelBooking(item.getmBkingId());
+                        binding.btnRideCompleted.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+                            @Override
+                            public void onSlideComplete(@NonNull SlideToActView view) {
+                                completeBookingAPi(item.getmBkingId());
+                            }
                         });
                     } else {
                         showError(response.message());
@@ -350,35 +351,4 @@ public class BookingDetailsActivity extends BaseActivity {
         });
     }
 
-    private void cancelBooking(String bookingId) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse> call = apiInterface.cancel_booking(bookingId);
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-
-                try {
-                    if (String.valueOf(response.code()).equalsIgnoreCase(Constant.SUCCESS_RESPONSE_CODE)) {
-                        if (response.body().getResult().equalsIgnoreCase(Constant.SUCCESS_RESPONSE)) {
-                            showAlert("Booking Cancelled successfully...!");
-                            getBookingDetails(bookingId);
-                        } else {
-
-                        }
-                    } else {
-
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-            }
-        });
-    }
 }
